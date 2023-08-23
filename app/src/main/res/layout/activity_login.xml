@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_login"
+    tools:context=".LoginActivity">
+
+    <!-- Top Background Image -->
+    <RelativeLayout
+        android:id="@+id/imageTop"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@drawable/background_black"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toTopOf="@+id/guideline"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        app:layout_constraintGuide_percent="0.4"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+app:layout_constraintEnd_toEndOf="parent"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline1"
+        app:layout_constraintGuide_percent="0.3"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"/>
+    
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/loginFormContainer"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:background="@drawable/login_bgrounded"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/guideline1"
+        app:layout_constraintEnd_toEndOf="parent">
+        
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/loginjoinusConstraintLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:background="@drawable/login_joinus_bg_grey_rounded"
+            android:padding="3dp"
+            android:layout_margin="20dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintWidth_percent="0.5"
+                android:text="Login"
+                android:paddingVertical="7dp"
+                android:textAlignment="center"
+                android:textSize="24dp"
+                android:textStyle="bold"
+                android:gravity="center"
+
+                app:layout_constraintRight_toRightOf="@+id/guideline3"
+                android:background="@drawable/login_joinup_selected_whiterounded"
+                app:layout_constraintLeft_toLeftOf="parent"/>
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline3"
+                app:layout_constraintGuide_percent="0.5"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toRightOf="@+id/guideline3"
+                android:background="@drawable/login_joinup_selected_whiterounded"
+                app:layout_constraintRight_toRightOf="parent"
+                android:text="Join Us"
+                android:paddingVertical="7dp"
+                android:textAlignment="center"
+                android:textSize="24dp"
+                android:textStyle="bold"
+                android:gravity="center"
+                />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/emailInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:background="@null"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/loginjoinusConstraintLayout"
+            app:layout_constraintEnd_toEndOf="parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/emaileditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Email"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:background="@drawable/textview_border_rounded"
+            android:drawableStart="@drawable/ic_baseline_email_24"
+            android:drawablePadding="8dp"
+            app:startIconContentDescription="Email"
+            android:inputType="textEmailAddress" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/passwordTextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:background="@null"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/emailInputLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:passwordToggleEnabled="true">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/passwordeditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Password"
+                android:layout_marginVertical="10dp"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:background="@drawable/textview_border_rounded"
+                android:drawableStart="@drawable/ic_baseline_lock_24"
+                android:drawablePadding="8dp"
+                app:startIconContentDescription="Email"
+                android:inputType="textPassword"
+                app:endIconMode="password_toggle"
+                app:endIconTint="#6F947D"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+        <CheckBox
+            android:id="@+id/rememberCheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Remember Me"
+           app:layout_constraintTop_toBottomOf="@+id/passwordTextInputLayout"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp" />
+        <TextView
+            android:id="@+id/forgotPasswordTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Forgot Password?"
+            app:layout_constraintTop_toTopOf="@id/rememberCheckBox"
+            app:layout_constraintBottom_toBottomOf="@+id/rememberCheckBox"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp" />
+        <Button
+            android:id="@+id/loginButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Login"
+            android:textAllCaps="false"
+            app:layout_constraintTop_toBottomOf="@id/forgotPasswordTextView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginVertical="30dp"
+            android:layout_marginStart="16dp"
+            android:background="@drawable/button_rounded_green"
+            android:layout_marginEnd="16dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
