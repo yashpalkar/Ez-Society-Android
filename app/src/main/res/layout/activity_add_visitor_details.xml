@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddVisitorDetails"
+    android:background="@color/purple_100">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/_20sdp">
+
+        <ImageView
+            android:id="@+id/visitiorIcon"
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_marginVertical="@dimen/_10sdp"
+            android:src="@drawable/profile_avatar"
+            app:layout_constraintStart_toStartOf="parent"
+
+            app:layout_constraintTop_toTopOf="parent"
+
+            />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/visitorDeatilsTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/_10sdp"
+            android:text="@string/visitor_details"
+            android:textSize="@dimen/_14sdp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/visitiorIcon" />
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/visitorNameTextInputLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginVertical="@dimen/_20sdp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/visitorDeatilsTextView"
+            android:layout_weight="4"
+            android:hint="Visitor Name"
+
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/visitorNameTextInputLayoutEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/visitorMobileTextInputLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginVertical="@dimen/_20sdp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/visitorNameTextInputLayout"
+            android:layout_weight="4"
+            android:hint="Visitor Mobile Number"
+            app:prefixText="@string/app_name"
+
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/visitorMobileTextInputLayoutEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/visitorCompanyNameTextInputLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginVertical="@dimen/_20sdp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/visitorMobileTextInputLayout"
+            android:layout_weight="4"
+            android:hint="Company Name"
+            app:prefixText="@string/app_name"
+
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/visitorCompanyNameTextInputLayoutEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/visitorPurposeTextInputLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginVertical="@dimen/_20sdp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/visitorCompanyNameTextInputLayout"
+            android:layout_weight="4"
+            android:hint="Purpose"
+            app:prefixText="@string/app_name"
+
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/visitorPurposeTextInputLayoutEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/otpTextInputLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+           android:layout_marginRight="@dimen/_10sdp"
+            android:layout_marginVertical="@dimen/_20sdp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/submitOtpButton"
+            app:layout_constraintTop_toBottomOf="@+id/visitorPurposeTextInputLayout"
+            android:layout_weight="4"
+            app:layout_constraintWidth_percent="0.7"
+            android:hint="@string/otp"
+            app:prefixText="@string/app_name"
+
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/otpTextInputLayoutEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/submitOtpButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/submit"
+            app:layout_constraintTop_toTopOf="@id/otpTextInputLayout"
+            android:layout_marginVertical="@dimen/_20sdp"
+            android:backgroundTint="@color/purple_500"
+            android:paddingVertical="@dimen/_13sdp"
+            app:layout_constraintWidth_percent="0.3"
+            android:layout_marginStart="@dimen/_10sdp"
+
+            app:layout_constraintBottom_toBottomOf="@+id/otpTextInputLayout"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/personToMeetTextInputLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="@dimen/_10sdp"
+            android:layout_marginVertical="@dimen/_20sdp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/submitOtpButton"
+            app:layout_constraintTop_toBottomOf="@+id/otpTextInputLayout"
+            android:hint="Person To Meet"
+            app:prefixText="@string/app_name"
+
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/personToMeetLayoutEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/submit"
+            app:layout_constraintTop_toBottomOf="@id/personToMeetTextInputLayout"
+            android:layout_marginVertical="@dimen/_10sdp"
+            android:backgroundTint="@color/purple_500"
+            android:paddingVertical="@dimen/_10sdp"
+            app:layout_constraintStart_toStartOf="parent"
+
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</ScrollView>

@@ -2,11 +2,15 @@ package com.ezmanagement.society
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.Fragment
 import com.ezmanagement.society.databinding.ActivityMainBinding
+import com.ezmanagement.society.fragment.HomeFragment
+import com.ezmanagement.society.fragment.ProfileFragment
 import com.google.android.material.navigation.NavigationView
 
 class MainActivity : AppCompatActivity() {
@@ -38,14 +42,17 @@ class MainActivity : AppCompatActivity() {
         navView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.nav_home -> {
+                    changeFragment(0)
                     Toast.makeText(this, "My Profile", Toast.LENGTH_SHORT).show()
                     true
                 }
                 R.id.nav_profile -> {
+                    changeFragment(1)
                     Toast.makeText(this, "People", Toast.LENGTH_SHORT).show()
                     true
                 }
-                R.id.nav_profile -> {
+                R.id.nav_settings -> {
+                    changeFragment(2)
                     Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show()
                     true
                 }
@@ -55,9 +62,27 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
+
+    fun changeFragment(position: Int) {
+        var fragment: Fragment? = null
+
+        when (position) {
+            0 -> fragment = HomeFragment()
+            1 -> fragment = ProfileFragment()
+            2 -> fragment = HomeFragment()
+            else -> {}
+        }
+
+        if (fragment != null) {
+            val fragmentManager = supportFragmentManager
+            fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit()
+//            mDrawerList.setItemChecked(position, true)
+//            mDrawerList.setSelection(position)
+//            setTitle(mNavigationDrawerItemTitles.get(position))
+            drawerLayout.closeDrawer(navView)
+        } else {
+            Log.e("MainActivity", "Error in creating fragment")
+        }
+    }
 }
-
-
-
-
-
