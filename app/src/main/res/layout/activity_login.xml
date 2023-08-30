@@ -71,7 +71,7 @@ app:layout_constraintEnd_toEndOf="parent"/>
                 android:text="Login"
                 android:paddingVertical="7dp"
                 android:textAlignment="center"
-                android:textSize="24dp"
+                android:textSize="@dimen/_15sdp"
                 android:textStyle="bold"
                 android:gravity="center"
 
@@ -97,7 +97,7 @@ app:layout_constraintEnd_toEndOf="parent"/>
                 android:text="Join Us"
                 android:paddingVertical="7dp"
                 android:textAlignment="center"
-                android:textSize="24dp"
+                android:textSize="@dimen/_15sdp"
                 android:textStyle="bold"
                 android:gravity="center"
                 />
