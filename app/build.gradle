@@ -1,7 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
-    id("com.apollographql.apollo3").version("3.7.3")
+    id("com.apollographql.apollo3").version("3.8.2")
 }
 
 android {
@@ -35,13 +35,16 @@ android {
         jvmTarget = '1.8'
     }
     apollo {
-        packageName.set("com.ezmanagement.society")
+        service("service") {
+
+            packageName.set("com.ezmanagement.society")
+        }
     }
 }
 
 dependencies {
 
-    implementation 'androidx.core:core-ktx:1.7.0'
+    implementation 'androidx.core:core-ktx:1.10.1'
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.9.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
@@ -65,7 +68,12 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
     implementation 'de.hdodenhof:circleimageview:3.1.0'
     implementation 'com.intuit.sdp:sdp-android:1.1.0'
-    implementation("com.apollographql.apollo3:apollo-runtime:3.7.3")
-    implementation("com.apollographql.apollo3:apollo-api:3.7.3")
+    implementation("com.apollographql.apollo3:apollo-runtime:3.8.2")
+    implementation("com.apollographql.apollo3:apollo-api:3.8.2")
+    implementation("com.apollographql.apollo3:apollo-normalized-cache-sqlite:3.8.2")
 
+}
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
 }

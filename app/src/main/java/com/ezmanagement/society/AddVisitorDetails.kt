@@ -10,5 +10,8 @@ class AddVisitorDetails : AppCompatActivity() {
         if (supportActionBar != null) {
             supportActionBar!!.hide()
         }
+
+
+
     }
 }

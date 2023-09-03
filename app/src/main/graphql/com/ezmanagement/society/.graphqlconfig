@@ -4,8 +4,9 @@
   "extensions": {
     "endpoints": {
       "Default GraphQL Endpoint": {
-        "url": "http://192.168.0.102:5280/v1/graphql",
+        "url": "http://192.168.0.104:5280/v1/graphql",
         "headers": {
+          "x-hasura-admin-secret": "NjiufkjDjhrJlLIKHndnlk38ng9938hjkl33ddj83hjdhf82jjkHF8njJaaqeiuldoi99",
           "user-agent": "JS GraphQL"
         },
         "introspect": false
@@ -13,3 +14,4 @@
     }
   }
 }
+

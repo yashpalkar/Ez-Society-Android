@@ -1,0 +1,11 @@
+query GetSocietyGuardbyID($_eq: uuid!) {
+  society_guards(where: {user_id: {_eq: $_eq}}) {
+    active_status
+    address
+    contact_no
+    created_at
+    id
+    society_id
+    updated_at
+  }
+}
