@@ -14,7 +14,7 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="34">
         <activity
-            android:name=".AddVisitorDetails"
+            android:name=".Visitors.AddVisitorDetails"
             android:exported="true">
             <meta-data
                 android:name="android.app.lib_name"
@@ -22,7 +22,7 @@
 
         </activity>
         <activity
-            android:name=".AddVisitor"
+            android:name=".Visitors.AddVisitor"
             android:exported="true">
             <meta-data
                 android:name="android.app.lib_name"

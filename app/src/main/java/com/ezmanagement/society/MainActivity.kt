@@ -11,6 +11,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import com.ezmanagement.society.Visitors.AddVisitor
 import com.ezmanagement.society.databinding.ActivityMainBinding
 import com.ezmanagement.society.fragment.HomeFragment
 import com.ezmanagement.society.fragment.ProfileFragment

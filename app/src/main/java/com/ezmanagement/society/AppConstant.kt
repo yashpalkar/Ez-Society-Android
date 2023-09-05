@@ -17,6 +17,8 @@ object AppConstants {
     const val ID = "id"
     const val USER_ID = "user_id"
     const val UPADTE_AT = "updated_at"
+    const val JWTTOKEN = "jwt_token"
+    const val REGISTERED_VISITOR = "registerd_visitor"
 
     // Add other constants as needed
 }

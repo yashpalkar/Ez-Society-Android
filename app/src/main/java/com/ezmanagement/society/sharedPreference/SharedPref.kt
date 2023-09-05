@@ -3,7 +3,6 @@ package com.ezmanagement.society.sharedPreference
 import android.content.Context
 import android.content.SharedPreferences
 import com.ezmanagement.society.AppConstants
-import com.ezmanagement.society.R
 
 class SharedPref (var context:Context){
     var sharedPrefrence: SharedPreferences? =null
@@ -16,7 +15,7 @@ class SharedPref (var context:Context){
         editor = sharedPrefrence!!.edit()
     }
 
-    fun <T> saveUserData(key : String, dataType: Class<T>, data: T){
+    fun <T> saveUserData(key: String, dataType: Class<T>, data: String?){
         editor = sharedPrefrence!!.edit()
         if(dataType == String::class.java){
             editor!!.putString(key, data.toString())

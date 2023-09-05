@@ -1,12 +1,9 @@
 package com.ezmanagement.society.utils
 
 import android.content.Context
-import android.content.Intent
 import android.util.Log
-import androidx.core.content.ContextCompat.startActivity
 
 import com.ezmanagement.society.AppConstants
-import com.ezmanagement.society.LoginActivity
 import com.ezmanagement.society.MainActivity
 
 import com.ezmanagement.society.Retrofit.RetrofitApi

@@ -9,3 +9,16 @@ query GetSocietyGuardbyID($_eq: uuid!) {
     updated_at
   }
 }
+query CheckVisitorRegister($_eq: uuid!, $_eq1: String!) {
+  society_visitors(where: {contact_no: {_eq: $_eq1}, society_id: {_eq: $_eq}}) {
+    contact_no
+    created_at
+    guard_id
+    id
+    last_visited_at
+    society_id
+    name
+    verified
+    updated_at
+  }
+}

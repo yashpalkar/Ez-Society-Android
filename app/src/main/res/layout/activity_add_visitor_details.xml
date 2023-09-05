@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddVisitorDetails"
+    tools:context=".Visitors.AddVisitorDetails"
     android:background="@color/purple_100">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -74,7 +74,7 @@
             app:layout_constraintTop_toBottomOf="@+id/visitorNameTextInputLayout"
             android:layout_weight="4"
             android:hint="Visitor Mobile Number"
-            app:prefixText="@string/app_name"
+            app:prefixText="+91"
 
             >
 
@@ -100,7 +100,6 @@
             app:layout_constraintTop_toBottomOf="@+id/visitorMobileTextInputLayout"
             android:layout_weight="4"
             android:hint="Company Name"
-            app:prefixText="@string/app_name"
 
             >
 
@@ -125,7 +124,6 @@
             app:layout_constraintTop_toBottomOf="@+id/visitorCompanyNameTextInputLayout"
             android:layout_weight="4"
             android:hint="Purpose"
-            app:prefixText="@string/app_name"
 
             >
 
@@ -152,7 +150,6 @@
             android:layout_weight="4"
             app:layout_constraintWidth_percent="0.7"
             android:hint="@string/otp"
-            app:prefixText="@string/app_name"
 
             >
 
@@ -192,7 +189,6 @@
             app:layout_constraintEnd_toStartOf="@+id/submitOtpButton"
             app:layout_constraintTop_toBottomOf="@+id/otpTextInputLayout"
             android:hint="Person To Meet"
-            app:prefixText="@string/app_name"
 
             >
 

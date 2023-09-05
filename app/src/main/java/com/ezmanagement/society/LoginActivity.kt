@@ -1,6 +1,5 @@
 package com.ezmanagement.society
 
-import android.app.Activity
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -87,6 +86,14 @@ class LoginActivity : AppCompatActivity(), OnClickListener, ResponseCallBack {
                                 String::class.java,
                                 refreshToken.substring(refreshToken.indexOf("=") + 1).substring(4)
                             )
+                            sharedPref?.saveUserData(
+                                AppConstants.USER_ID,
+                                String::class.java,
+                            user_id)
+                            sharedPref?.saveUserData(
+                                AppConstants.JWTTOKEN,
+                                String::class.java,
+                                jwttoken)
                             var userPresenter=UserPresenter(lifecycleScope)
                             user_id?.let { userPresenter.getProfileData(it,jwttoken,this@LoginActivity) }
 //                            getProfileData(user_id!!, jwttoken)

@@ -13,7 +13,7 @@ class ApiClient {
         val okHttpClient = OkHttpClient.Builder().build()
         return ApolloClient.builder()
             .addHttpHeader("content-type","application/json")
-            .serverUrl("http://192.168.0.104:5280/v1/graphql")
+            .serverUrl("http://192.168.0.106:5280/v1/graphql")
             .okHttpClient(OkHttpClient.Builder()
 //                .connectTimeout(30, TimeUnit.SECONDS)
 //                .writeTimeout(30, TimeUnit.SECONDS)
