@@ -14,14 +14,14 @@
         android:id="@+id/imageTop"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@drawable/background_black"
+
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toTopOf="@+id/guideline"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
@@ -69,10 +69,10 @@ app:layout_constraintEnd_toEndOf="parent"/>
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintWidth_percent="0.5"
                 android:text="Login"
+                android:textColor="@color/black"
                 android:paddingVertical="7dp"
                 android:textAlignment="center"
                 android:textSize="@dimen/_15sdp"
-                android:textStyle="bold"
                 android:gravity="center"
 
                 app:layout_constraintRight_toRightOf="@+id/guideline3"
@@ -98,7 +98,6 @@ app:layout_constraintEnd_toEndOf="parent"/>
                 android:paddingVertical="7dp"
                 android:textAlignment="center"
                 android:textSize="@dimen/_15sdp"
-                android:textStyle="bold"
                 android:gravity="center"
                 />
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -108,7 +107,7 @@ app:layout_constraintEnd_toEndOf="parent"/>
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
-            android:background="@null"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/loginjoinusConstraintLayout"
             app:layout_constraintEnd_toEndOf="parent">
@@ -122,10 +121,11 @@ app:layout_constraintEnd_toEndOf="parent"/>
             android:layout_marginBottom="10dp"
             android:paddingStart="12dp"
             android:paddingEnd="12dp"
-            android:background="@drawable/textview_border_rounded"
+
             android:drawableStart="@drawable/ic_baseline_email_24"
             android:drawablePadding="8dp"
             app:startIconContentDescription="Email"
+
             android:inputType="textEmailAddress" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -134,7 +134,7 @@ app:layout_constraintEnd_toEndOf="parent"/>
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
-            android:background="@null"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/emailInputLayout"
             app:layout_constraintEnd_toEndOf="parent"
@@ -148,7 +148,7 @@ app:layout_constraintEnd_toEndOf="parent"/>
                 android:layout_marginVertical="10dp"
                 android:paddingStart="12dp"
                 android:paddingEnd="12dp"
-                android:background="@drawable/textview_border_rounded"
+
                 android:drawableStart="@drawable/ic_baseline_lock_24"
                 android:drawablePadding="8dp"
                 app:startIconContentDescription="Email"

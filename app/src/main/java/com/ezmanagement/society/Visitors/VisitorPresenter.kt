@@ -2,10 +2,7 @@ package com.ezmanagement.society.Visitors
 
 import android.util.Log
 import androidx.lifecycle.LifecycleCoroutineScope
-import com.ezmanagement.society.AppConstants
-import com.ezmanagement.society.CheckVisitorRegisterQuery
-import com.ezmanagement.society.GetSocietyGuardbyIDQuery
-import com.ezmanagement.society.LoginActivity
+import com.ezmanagement.society.*
 import com.ezmanagement.society.Retrofit.ApiClient
 import com.ezmanagement.society.sharedPreference.SharedPref
 import com.google.gson.Gson
@@ -20,6 +17,7 @@ class VisitorPresenter(private val lifecycleScope: LifecycleCoroutineScope,) {
     ) {
         sharedPref = SharedPref(addVisitor);
         var apiClient = ApiClient()
+
 //        var response:Response
         lifecycleScope.launchWhenResumed {
             try {

@@ -31,7 +31,11 @@ class LoginActivity : AppCompatActivity(), OnClickListener, ResponseCallBack {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         sharedPref = SharedPref(this);
+
         setContentView(binding.root)
+        if (supportActionBar != null) {
+            supportActionBar!!.hide()
+        }
         retrofit = RetrofitService.getInstance()
         binding.loginButton.setOnClickListener(this)
     }
@@ -120,7 +124,7 @@ class LoginActivity : AppCompatActivity(), OnClickListener, ResponseCallBack {
 
     override fun onSuccess() {
 
- var intent=Intent(this@LoginActivity,MainActivity::class.java)
+ val intent = Intent(this@LoginActivity, MainActivity::class.java)
         startActivity(intent)
 
     }

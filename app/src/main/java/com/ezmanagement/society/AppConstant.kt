@@ -1,5 +1,9 @@
 package com.ezmanagement.society
 
+import android.os.Build
+import androidx.annotation.RequiresApi
+import java.time.format.DateTimeFormatter
+
 
 object AppConstants {
     const val BASE_URL = "https://api.example.com/"
@@ -15,10 +19,13 @@ object AppConstants {
     const val CREATED_AT = "created_at"
     const val SOCIETY_ID = "society_id"
     const val ID = "id"
+    const val GUARDID = "Guard_id"
     const val USER_ID = "user_id"
     const val UPADTE_AT = "updated_at"
     const val JWTTOKEN = "jwt_token"
     const val REGISTERED_VISITOR = "registerd_visitor"
+    @RequiresApi(Build.VERSION_CODES.O)
+    val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX")
 
     // Add other constants as needed
 }

@@ -20,8 +20,7 @@ class RefreshTokenClass(context: Context) {
     var context = context
 
 
-     fun onGetRefreshToken(refreshToken: String?) {
-         var mainActivity:MainActivity= MainActivity()
+     fun onGetRefreshToken(refreshToken: String?,refreshTokenCallBack: RefreshTokenCallBack) {
 
         sharedPref = SharedPref(context)
         var retrofit = RetrofitService.getInstance()
@@ -41,20 +40,22 @@ class RefreshTokenClass(context: Context) {
                         AppConstants.LOGIN_TOKEN,
                         String::class.java,
                         refresh_token.asString)
+                    refreshTokenCallBack.onSucess()
                 } else if (response.code() == 401) {
-                    mainActivity.onError()
+                    refreshTokenCallBack.onError()
 
                 } else {
-                    mainActivity.onError()
+                    refreshTokenCallBack.onError()
                 }
             }
 
             override fun onFailure(call: Call<JsonObject?>, t: Throwable) {
-                mainActivity.onRefreshTokenExpired(t.message.toString())
+                refreshTokenCallBack.onRefreshTokenExpired(t.message.toString())
             }
         })
 
     }
+
 
 
 

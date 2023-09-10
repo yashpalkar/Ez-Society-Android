@@ -58,7 +58,7 @@ class UserPresenter(private val lifecycleScope: LifecycleCoroutineScope,) {
                     society_guards?.get(0)?.society_id!! as String
                 )
                 sharedPref?.saveUserData(
-                    AppConstants.ID,
+                    AppConstants.GUARDID,
                     String::class.java,
                     society_guards?.get(0)?.id!! as String
                 )

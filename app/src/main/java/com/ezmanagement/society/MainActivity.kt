@@ -106,7 +106,11 @@ class MainActivity : AppCompatActivity(), RefreshTokenCallBack, OnClickListener 
         )
 
         var refreshTokenClass: RefreshTokenClass = RefreshTokenClass(this)
-        refreshTokenClass.onGetRefreshToken(login_token)
+        refreshTokenClass.onGetRefreshToken(login_token,this)
+    }
+
+    override fun onSucess() {
+
     }
 
     override fun onError() {

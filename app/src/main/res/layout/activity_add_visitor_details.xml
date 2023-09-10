@@ -5,12 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Visitors.AddVisitorDetails"
-    android:background="@color/purple_100">
+    android:background="@color/white">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="@dimen/_20sdp">
+        android:padding="@dimen/_20sdp"
+        android:visibility="visible">
 
         <ImageView
             android:id="@+id/visitiorIcon"
@@ -32,6 +33,7 @@
             android:text="@string/visitor_details"
             android:textSize="@dimen/_14sdp"
             android:textStyle="bold"
+            android:textColor="#555555"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/visitiorIcon" />
@@ -58,6 +60,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
+                android:textColor="#555555"
                 />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -83,6 +86,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
+                android:textColor="#555555"
+                android:focusable="false"
                 />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -108,6 +113,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
+                android:textColor="#555555"
                 />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -132,6 +138,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
+                android:textColor="#555555"
                 />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -158,6 +165,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
+                android:textColor="#555555"
                 />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -169,7 +177,7 @@
             android:text="@string/submit"
             app:layout_constraintTop_toTopOf="@id/otpTextInputLayout"
             android:layout_marginVertical="@dimen/_20sdp"
-            android:backgroundTint="@color/purple_500"
+            android:backgroundTint="@color/black"
             android:paddingVertical="@dimen/_13sdp"
             app:layout_constraintWidth_percent="0.3"
             android:layout_marginStart="@dimen/_10sdp"
@@ -189,6 +197,7 @@
             app:layout_constraintEnd_toStartOf="@+id/submitOtpButton"
             app:layout_constraintTop_toBottomOf="@+id/otpTextInputLayout"
             android:hint="Person To Meet"
+            android:textColor="#555555"
 
             >
 
@@ -201,18 +210,21 @@
 
         </com.google.android.material.textfield.TextInputLayout>
         <Button
+            android:id="@+id/submitVisitorButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/submit"
             app:layout_constraintTop_toBottomOf="@id/personToMeetTextInputLayout"
             android:layout_marginVertical="@dimen/_10sdp"
-            android:backgroundTint="@color/purple_500"
+            android:backgroundTint="@color/black"
             android:paddingVertical="@dimen/_10sdp"
             app:layout_constraintStart_toStartOf="parent"
-
             app:layout_constraintEnd_toEndOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-
+<!--<androidx.cardview.widget.CardView-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="wrap_content"-->
+<!--    android:layout_margin="@dimen/_20sdp"/>-->
 </ScrollView>
