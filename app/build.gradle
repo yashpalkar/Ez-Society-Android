@@ -72,6 +72,7 @@ dependencies {
     implementation("com.apollographql.apollo3:apollo-api:3.8.2")
     implementation("com.apollographql.apollo3:apollo-normalized-cache-sqlite:3.8.2")
 
+
 }
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8

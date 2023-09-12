@@ -93,7 +93,7 @@ class AddVisitorDetails : AppCompatActivity(), View.OnClickListener,
                         checkInTime,
                         binding.visitorNameTextInputLayoutEditText.text.toString(),
                         societyId,
-                        false,
+                        false,"Image Path",
                         this@AddVisitorDetails
                     )
                 }

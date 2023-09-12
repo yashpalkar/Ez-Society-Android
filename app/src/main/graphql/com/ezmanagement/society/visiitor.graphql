@@ -1,5 +1,5 @@
-mutation RegisterVisitor($contact_no: String!, $guard_id: uuid!, $last_visited_at: timestamptz!, $name: String!, $society_id: uuid!, $verified: Boolean!) {
-  insert_society_visitors_one(object: {name: $name, last_visited_at: $last_visited_at, verified: $verified, society_id: $society_id, guard_id: $guard_id, contact_no: $contact_no}) {
+mutation RegisterVisitor($contact_no: String!, $guard_id: uuid!, $last_visited_at: timestamptz!, $name: String!, $society_id: uuid!, $verified: Boolean!, $image: String!) {
+  insert_society_visitors_one(object: {name: $name, last_visited_at: $last_visited_at, verified: $verified, society_id: $society_id, guard_id: $guard_id, contact_no: $contact_no, image: $image}) {
     id
     last_visited_at
     name
@@ -9,6 +9,7 @@ mutation RegisterVisitor($contact_no: String!, $guard_id: uuid!, $last_visited_a
     contact_no
     updated_at
     verified
+    image
   }
 }
 
@@ -29,6 +30,32 @@ query GetVisitorCheckIn($_eq: uuid!) {
     id
     is_allowed
     society_id
+  }
+}
+
+query VisitorListBySocietyId($_eq: uuid!) {
+  society_visitors_checkin(where: {society_id: {_eq: $_eq}}) {
+    attended_time
+    check_in
+    check_out
+    flat_no
+    guard_id
+    id
+    is_allowed
+    society_id
+    visitor_id
+    society_visitors_checkin_society_visitor {
+      contact_no
+      image
+      name
+      verified
+      created_at
+      guard_id
+      id
+      last_visited_at
+      society_id
+      updated_at
+    }
   }
 }
 

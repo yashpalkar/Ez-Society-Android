@@ -22,6 +22,7 @@ class AddVisitorDetailsPresenter (private val lifecycleScope: LifecycleCoroutine
         visitorName: String,
         societyId: String,
         isVerifed: Boolean,
+        imageString:String,
         addVisitorDetails: AddVisitorDetails
     ) {
         val gson = GsonBuilder().create()
@@ -30,7 +31,7 @@ class AddVisitorDetailsPresenter (private val lifecycleScope: LifecycleCoroutine
             try {
 
                 val response = apiClient!!.getApolloClient().mutation(
-                    RegisterVisitorMutation(contactNo,guardId,lastVisitedAT,visitorName,societyId, isVerifed)
+                    RegisterVisitorMutation(contactNo,guardId,lastVisitedAT,visitorName,societyId, isVerifed,imageString)
                 ).addHttpHeader(
                     "Authorization", "Bearer $jwt_token"
                 ).execute()

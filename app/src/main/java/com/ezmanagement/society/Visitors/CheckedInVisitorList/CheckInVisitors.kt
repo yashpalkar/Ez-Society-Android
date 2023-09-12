@@ -1,4 +1,4 @@
-package com.ezmanagement.society.Visitors.CheckInVisitors
+package com.ezmanagement.society.Visitors.CheckedInVisitorList
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
