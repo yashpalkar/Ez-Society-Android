@@ -11,6 +11,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import com.ezmanagement.society.RoundUp.RoundUpActivity
 import com.ezmanagement.society.Visitors.AddVisitor
 import com.ezmanagement.society.Visitors.CheckedInVisitorList.CheckedInVisitorActivity
 import com.ezmanagement.society.databinding.ActivityMainBinding
@@ -36,6 +37,7 @@ class MainActivity : AppCompatActivity(), RefreshTokenCallBack, OnClickListener 
         drawerLayout = findViewById(R.id.drawerLayout)
         binding.visitorRelativeLayout.setOnClickListener(this)
         binding.visitorListRelativeLayout.setOnClickListener(this)
+        binding.roundUpRelativeLayout.setOnClickListener(this)
         // Pass the ActionBarToggle action into the drawerListener
         actionBarToggle = ActionBarDrawerToggle(this, drawerLayout, 0, 0)
         drawerLayout.addDrawerListener(actionBarToggle)
@@ -134,6 +136,9 @@ class MainActivity : AppCompatActivity(), RefreshTokenCallBack, OnClickListener 
             }
             R.id.visitorListRelativeLayout ->{
                 startActivity(Intent(this,CheckedInVisitorActivity::class.java))
+            }
+            R.id.roundUpRelativeLayout->{
+                startActivity(Intent(this,RoundUpActivity::class.java))
             }
         }
     }

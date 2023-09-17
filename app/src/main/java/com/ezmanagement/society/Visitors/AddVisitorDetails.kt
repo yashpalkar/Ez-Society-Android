@@ -1,6 +1,9 @@
 package com.ezmanagement.society.Visitors
 
+
 import android.content.Intent
+import android.content.pm.PackageManager
+
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -8,13 +11,18 @@ import android.view.View
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
+import android.Manifest
+import android.net.Uri
+import android.provider.MediaStore
 import com.ezmanagement.society.*
 import com.ezmanagement.society.Model.VisitorModel
 import com.ezmanagement.society.databinding.ActivityAddVisitorDetailsBinding
 import com.ezmanagement.society.sharedPreference.SharedPref
 import java.time.ZonedDateTime
-import java.util.*
+
 
 class AddVisitorDetails : AppCompatActivity(), View.OnClickListener,
     VisitorCallBack.RegisterVisitorCallBack, VisitorCallBack.VisitorCheckInCallBack {
@@ -23,6 +31,8 @@ class AddVisitorDetails : AppCompatActivity(), View.OnClickListener,
     var visitorModel: VisitorModel? = null
     var addVisitorDetailsPresenter: AddVisitorDetailsPresenter? = null
     var visitorDetailsPresenter: VisitorCheckInPresenter? = null
+    private val CAMERA_PERMISSION_REQUEST_CODE = 100
+    private val REQUEST_IMAGE_CAPTURE = 101
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAddVisitorDetailsBinding.inflate(layoutInflater)
@@ -49,6 +59,7 @@ class AddVisitorDetails : AppCompatActivity(), View.OnClickListener,
             ""
         )
         binding.submitVisitorButton.setOnClickListener(this)
+        binding.addimageButton.setOnClickListener(this)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -99,6 +110,47 @@ class AddVisitorDetails : AppCompatActivity(), View.OnClickListener,
                 }
 
             }
+            R.id.addimageButton -> {
+                if (ContextCompat.checkSelfPermission(this@AddVisitorDetails, Manifest.permission.CAMERA)
+                    != PackageManager.PERMISSION_GRANTED) {
+                    // Permission is not granted, request it
+                    ActivityCompat.requestPermissions(this@AddVisitorDetails,
+                        arrayOf(Manifest.permission.CAMERA),
+                        CAMERA_PERMISSION_REQUEST_CODE)
+                } else {
+                    // Permission is already granted, open the camera
+                    openCamera()
+                }
+            }
+        }
+    }
+    private fun openCamera() {
+        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        if (takePictureIntent.resolveActivity(packageManager) != null) {
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
+        }
+    }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+
+            val imageUri: Uri? = data?.data
+
+
+        }
+    }
+    override fun onRequestPermissionsResult(requestCode: Int,
+                                            permissions: Array<String>,
+                                            grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == CAMERA_PERMISSION_REQUEST_CODE) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permission granted, open the camera
+                openCamera()
+            } else {
+
+                Toast.makeText(this@AddVisitorDetails, "Camera permission denied", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
@@ -127,7 +179,7 @@ class AddVisitorDetails : AppCompatActivity(), View.OnClickListener,
 
     override fun visiterCheckInSuccessfully(addVisitorCheckinMutation: AddVisitorCheckinMutation.Insert_society_visitors_checkin_one) {
         Toast.makeText(this, "Visitor Check In SuccessFully", Toast.LENGTH_SHORT).show()
-        startActivity(Intent(this,MainActivity::class.java))
+        startActivity(Intent(this, MainActivity::class.java))
     }
 
     override fun onError() {

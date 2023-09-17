@@ -11,4 +11,5 @@
     <string name="submit">Submit</string>
     <string name="visitor_details">Visitor Details</string>
     <string name="otp">OTP</string>
+    <string name="add_notes">Add Notes</string>
 </resources>

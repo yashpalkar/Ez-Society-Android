@@ -43,4 +43,6 @@ class VisitorPresenter(private val lifecycleScope: LifecycleCoroutineScope,) {
 //            return response?.data?.society_id
         }
     }
+
+
 }

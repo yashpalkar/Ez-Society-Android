@@ -1,0 +1,22 @@
+mutation InsertRoundup($image_url: String!, $notes: String!, $roundup_at: timestamptz!, $roundup_by: uuid!, $roundup_id: uuid!, $society_id: uuid!) {
+  insert_society_roundups_checkins_one(object: {roundup_at: $roundup_at, roundup_by: $roundup_by, society_id: $society_id, notes: $notes, roundup_id: $roundup_id, image_url: $image_url}) {
+    id
+    image_url
+    notes
+    roundup_at
+    roundup_by
+    society_id
+    roundup_id
+  }
+}
+
+query GetRoundUpId($id: uuid!) {
+  society_roundups_by_pk(id: $id) {
+    society_id
+    updated_at
+    location_name
+    id
+    created_at
+      }
+}
+

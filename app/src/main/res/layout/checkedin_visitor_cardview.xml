@@ -27,102 +27,121 @@
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/visitorImageview"
+        android:layout_marginHorizontal="@dimen/_7sdp"
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/visitorNameTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="@dimen/_10sdp"
+            android:layout_marginVertical="@dimen/_5sdp"
             android:fontFamily="@font/uber_move_medium"
             android:text="User Name"
             android:textColor="@color/black"
             android:textSize="@dimen/_14sdp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/mobileNumberTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/uber_move_medium"
+            android:text="9221414614"
+            android:textSize="@dimen/_12sdp"
+            android:textAlignment="center"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/visitorNameTextView" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/checkin_time_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Check In-"
+            android:fontFamily="@font/uber_move_medium"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/visitorNameTextView"
-            />
+            app:layout_constraintTop_toBottomOf="@id/mobileNumberTextView" />
+
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/checkin_time_valueTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Check In-"
             android:layout_marginHorizontal="@dimen/_5sdp"
+            android:fontFamily="@font/uber_move_medium"
+            android:text="Check-in-"
             app:layout_constraintStart_toEndOf="@id/checkin_time_title"
-            app:layout_constraintTop_toBottomOf="@id/visitorNameTextView"
-            />
+            app:layout_constraintTop_toBottomOf="@id/mobileNumberTextView" />
 
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/checkout_time_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Check In-"
+            android:fontFamily="@font/uber_move_medium"
+            android:text="Check-out-"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/checkin_time_title"
-            />
+            app:layout_constraintTop_toBottomOf="@id/checkin_time_title" />
+
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/checkout_time_valueTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Check In-"
             android:layout_marginHorizontal="@dimen/_5sdp"
+            android:fontFamily="@font/uber_move_medium"
+            android:text="Check In-"
             app:layout_constraintStart_toEndOf="@id/checkout_time_title"
-            app:layout_constraintTop_toBottomOf="@id/checkin_time_valueTextView"
-            />
+            app:layout_constraintTop_toBottomOf="@id/checkin_time_valueTextView" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/flatno_titileTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Check In-"
+            android:fontFamily="@font/uber_move_medium"
+            android:text="Flat No-"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/checkout_time_title"
-            />
+            app:layout_constraintTop_toBottomOf="@id/checkout_time_title" />
+
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/flatno_valueTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Check In-"
             android:layout_marginHorizontal="@dimen/_5sdp"
+            android:fontFamily="@font/uber_move_medium"
+            android:text="06"
             app:layout_constraintStart_toEndOf="@id/flatno_titileTextView"
-            app:layout_constraintTop_toBottomOf="@id/checkout_time_valueTextView"
-            />
-
-
+            app:layout_constraintTop_toBottomOf="@id/checkout_time_valueTextView" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
     <LinearLayout
+        android:id="@+id/checkoutLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/button_rounded_green"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:padding="10dp"
-        >
+        android:layout_marginRight="@dimen/_10sdp"
+        android:paddingHorizontal="10dp">
+
         <TextView
             android:id="@+id/checkouttext"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="CheckOut"
-            android:textSize="@dimen/_10sdp"
+            android:layout_gravity="center_vertical"
+            android:fontFamily="@font/uber_move_medium"
+            android:text="Out"
             android:textColor="@color/white"
-            android:layout_gravity="center_vertical"   />
+            android:textSize="@dimen/_10sdp" />
+
         <ImageView
             android:id="@+id/checkoutarrow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_baseline_arrow_forward_24"
-          />
+            android:src="@drawable/ic_baseline_arrow_forward_24" />
 
     </LinearLayout>
 

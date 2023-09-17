@@ -60,3 +60,8 @@ query VisitorListBySocietyId($_eq: uuid!) {
 }
 
 
+mutation UpdateCheckVisitor($_eq: uuid!, $_eq1: uuid!, $attended_time: timetz!, $check_out: timestamptz!) {
+  update_society_visitors_checkin(where: {id: {_eq: $_eq1}, society_id: {_eq: $_eq}}, _set: {attended_time: $attended_time, check_out: $check_out}) {
+    affected_rows
+  }
+}

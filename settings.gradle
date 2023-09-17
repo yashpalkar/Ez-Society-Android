@@ -13,6 +13,7 @@ dependencyResolutionManagement {
         mavenCentral()
         jcenter()
         maven { url "https://dl.bintray.com/apollographql/android" }
+        maven { url 'https://jitpack.io' }
     }
 }
 

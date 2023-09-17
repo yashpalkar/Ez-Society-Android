@@ -15,15 +15,26 @@
 
         <ImageView
             android:id="@+id/visitiorIcon"
-            android:layout_width="@dimen/_50sdp"
-            android:layout_height="@dimen/_50sdp"
-            android:layout_marginVertical="@dimen/_10sdp"
+            android:layout_width="@dimen/_70sdp"
+            android:layout_height="@dimen/_70sdp"
+            android:layout_marginVertical="@dimen/_5sdp"
             android:src="@drawable/profile_avatar"
             app:layout_constraintStart_toStartOf="parent"
 
             app:layout_constraintTop_toTopOf="parent"
 
             />
+        <Button
+            android:id="@+id/addimageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add Photo"
+            app:layout_constraintTop_toTopOf="@+id/visitiorIcon"
+            app:layout_constraintLeft_toRightOf="@+id/visitiorIcon"
+            app:layout_constraintBottom_toBottomOf="@+id/visitiorIcon"
+            android:layout_marginHorizontal="@dimen/_20sdp"
+            app:layout_constraintRight_toRightOf="parent"/>
+
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/visitorDeatilsTextView"
