@@ -1,11 +1,10 @@
 package com.ezmanagement.society.RoundUp
 
+import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.LifecycleCoroutineScope
 import com.ezmanagement.society.GetRoundUpIdQuery
 import com.ezmanagement.society.Retrofit.ApiClient
-import com.ezmanagement.society.VisitorListBySocietyIdQuery
-import com.ezmanagement.society.Visitors.CheckedInVisitorList.CheckedInVisitorContract
 import com.google.gson.Gson
 
 class RoundPresenter(private val view: RoundUpContract.View,
@@ -39,9 +38,12 @@ class RoundPresenter(private val view: RoundUpContract.View,
 //            return response?.data?.society_id
         }
     }
-    override fun onShowPopupClicked() {
+    override fun onShowPopupClicked(
+        societyRoundup: GetRoundUpIdQuery.Society_roundups_by_pk,
+        imageUri: Uri?
+    ) {
 
-        view.showPopup()
+        view.showPopup(societyRoundup,imageUri)
     }
 
     override fun onDismissPopupClicked() {

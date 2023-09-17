@@ -1,14 +1,14 @@
 package com.ezmanagement.society.RoundUp
 
+import android.net.Uri
 import com.ezmanagement.society.GetRoundUpIdQuery
-import com.ezmanagement.society.VisitorListBySocietyIdQuery
 
 interface RoundUpContract {
 
         interface View {
             fun validQr(societyRoundup: GetRoundUpIdQuery.Society_roundups_by_pk)
             fun inValidQr(message: String?)
-            fun showPopup()
+            fun showPopup(societyRoundup: GetRoundUpIdQuery.Society_roundups_by_pk,imageUri: Uri?)
             fun dismissPopup()
         }
 
@@ -16,7 +16,10 @@ interface RoundUpContract {
             fun isQRValid(
                 qrcode: String, jwttoken: String
             )
-            fun onShowPopupClicked()
+            fun onShowPopupClicked(
+                societyRoundup: GetRoundUpIdQuery.Society_roundups_by_pk,
+                imageUri: Uri?
+            )
             fun onDismissPopupClicked()
 
         }

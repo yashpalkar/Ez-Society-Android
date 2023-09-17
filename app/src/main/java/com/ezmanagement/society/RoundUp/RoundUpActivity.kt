@@ -31,6 +31,7 @@ class RoundUpActivity : AppCompatActivity(),RoundUpContract.View{
     private val CAMERA_PERMISSION_REQUEST_CODE = 100
     private val REQUEST_IMAGE_CAPTURE = 101
     var jwtToken:String?=null
+    var societyRoundup: GetRoundUpIdQuery.Society_roundups_by_pk?=null
     var sharedPref: SharedPref? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -138,11 +139,15 @@ class RoundUpActivity : AppCompatActivity(),RoundUpContract.View{
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             binding.scannerView.visibility=View.GONE
             val imageUri: Uri? = data?.data
-            presenter.onShowPopupClicked()
+             var imageUris: Uri= Uri.parse("file://storage/emulated/0/Download/myfile.txt")
+            societyRoundup?.let { presenter.onShowPopupClicked(it,imageUris) }
+        }else{
+            societyRoundup=null
         }
     }
 
     override fun validQr(societyRoundup: GetRoundUpIdQuery.Society_roundups_by_pk) {
+       this.societyRoundup=societyRoundup
         if (ContextCompat.checkSelfPermission(this@RoundUpActivity, Manifest.permission.CAMERA)
             != PackageManager.PERMISSION_GRANTED) {
             // Permission is not granted, request it
@@ -158,15 +163,22 @@ class RoundUpActivity : AppCompatActivity(),RoundUpContract.View{
     }
 
     override fun inValidQr(message: String?) {
+        societyRoundup=null
       Toast.makeText(this,message,Toast.LENGTH_SHORT).show()
         binding.scannerView.visibility=View.VISIBLE
         codeScanner.startPreview()
     }
-    override fun showPopup() {
-        // Create and show the popup dialog using a DialogFragment or a custom dialog class
-        val popupDialog = RoundupDialog()
-        popupDialog.show(supportFragmentManager, "roundup_dialog")
+
+    override fun showPopup(
+        societyRoundup: GetRoundUpIdQuery.Society_roundups_by_pk,
+        imageUri: Uri?
+    ) {
+        val popupDialog = imageUri?.let { RoundupDialog(societyRoundup, it) }
+
+        popupDialog?.show(supportFragmentManager, "roundup_dialog")
     }
+
+
     override fun dismissPopup() {
         // Dismiss the popup dialog
         val popupDialog = supportFragmentManager.findFragmentByTag("roundup_dialog") as? DialogFragment

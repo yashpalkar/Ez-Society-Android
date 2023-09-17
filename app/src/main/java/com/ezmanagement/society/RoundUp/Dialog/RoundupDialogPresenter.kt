@@ -1,5 +1,6 @@
 package com.ezmanagement.society.RoundUp.Dialog
 
+import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.LifecycleCoroutineScope
 import com.ezmanagement.society.InsertRoundupMutation
@@ -13,7 +14,7 @@ class RoundupDialogPresenter(
 ) : DialogContract.Presenter {
 
     override fun addRoundup(
-        imageUrl: String,
+        imageUrl: Uri,
         notes: String,
         roundup_at: String,
         roundup_by: String,
@@ -30,7 +31,7 @@ class RoundupDialogPresenter(
                 val response =
                     apiClient!!.getApolloClient().mutation(
                         InsertRoundupMutation(
-                            imageUrl,
+                            imageUrl.toString(),
                             notes,
                             roundup_at, roundup_by, roundup_id, societyid
                         )
@@ -48,11 +49,11 @@ class RoundupDialogPresenter(
                   view.onRoundSuccessfull()
                 }
                 else{
-                    view.onError()
+                    view.onError("Roundup Failed")
                 }
             } catch (e: Exception) {
                 Log.d("apierror", e.message.toString())
-                view.onError()
+                view.onError( e.message.toString())
             }
 //            return response?.data?.society_id
         }

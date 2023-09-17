@@ -1,15 +1,16 @@
 package com.ezmanagement.society.RoundUp.Dialog
 
+import android.net.Uri
+
 interface DialogContract {
     interface View {
-
-      fun onRoundSuccessfull()
-        fun onError()
+        fun onRoundSuccessfull()
+        fun onError(toString: String)
     }
 
     interface Presenter {
         fun addRoundup(
-            imageUrl: String,
+            imageUrl: Uri,
             notes: String,
             roundup_at: String,
             roundup_by: String,
