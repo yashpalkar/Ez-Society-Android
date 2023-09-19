@@ -3,10 +3,9 @@ package com.ezmanagement.society.RoundUp
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.media.MediaScannerConnection
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
 import android.provider.MediaStore
 import android.view.View
 import android.widget.Toast
@@ -20,13 +19,15 @@ import com.ezmanagement.society.AppConstants
 import com.ezmanagement.society.GetRoundUpIdQuery
 import com.ezmanagement.society.MainActivity
 import com.ezmanagement.society.RoundUp.Dialog.RoundupDialog
-
 import com.ezmanagement.society.databinding.ActivityRoundUpBinding
 import com.ezmanagement.society.sharedPreference.SharedPref
+import com.ezmanagement.society.utils.Utils
 import org.json.JSONException
 import org.json.JSONObject
+import retrofit2.http.Url
 import java.io.File
 import java.io.FileOutputStream
+import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -37,6 +38,7 @@ class RoundUpActivity : AppCompatActivity(),RoundUpContract.View{
     private val CAMERA_PERMISSION_REQUEST_CODE = 100
     private val REQUEST_IMAGE_CAPTURE = 101
     var jwtToken:String?=null
+    var societyId:String?=null
     var societyRoundup: GetRoundUpIdQuery.Society_roundups_by_pk?=null
     var sharedPref: SharedPref? = null
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,6 +50,11 @@ class RoundUpActivity : AppCompatActivity(),RoundUpContract.View{
         sharedPref = SharedPref(this);
         jwtToken = sharedPref!!.getUserData(
             AppConstants.JWTTOKEN,
+            String::class.java,
+            ""
+        )
+         societyId = sharedPref!!.getUserData(
+            AppConstants.SOCIETY_ID,
             String::class.java,
             ""
         )
@@ -143,14 +150,21 @@ class RoundUpActivity : AppCompatActivity(),RoundUpContract.View{
      override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            binding.scannerView.visibility=View.GONE
+            binding.scannerView.visibility = View.GONE
             val imageUri: Uri? = data?.data
-            imageUri?.let { uri ->
-                // Save the captured image to storage
-                val savedUri = saveImageToStorage(uri)
-                societyRoundup?.let { presenter.onShowPopupClicked(it, savedUri) }
+            val imageBitmap = data?.extras?.get("data") as Bitmap?
+            if (imageBitmap != null) {
+                var file = Utils.saveBitmapToExternalFilesDir(this,imageBitmap)
+                if (file != null) {
+                    presenter.uploadImage(file,societyId.toString(),societyRoundup?.id.toString())
+                }
             }
-            societyRoundup?.let { presenter.onShowPopupClicked(it,imageUri) }
+//            imageUri?.let { uri ->
+//                // Save the captured image to storage
+//                val savedUri = saveImageToStorage(uri)
+//                societyRoundup?.let { presenter.onShowPopupClicked(it, savedUri) }
+//            }
+
         }else{
             societyRoundup=null
         }
@@ -158,8 +172,8 @@ class RoundUpActivity : AppCompatActivity(),RoundUpContract.View{
 
     override fun validQr(societyRoundup: GetRoundUpIdQuery.Society_roundups_by_pk) {
        this.societyRoundup=societyRoundup
-        if (ContextCompat.checkSelfPermission(this@RoundUpActivity, Manifest.permission.CAMERA)
-            != PackageManager.PERMISSION_GRANTED) {
+        if (allPermissionsGranted())
+             {
             // Permission is not granted, request it
             ActivityCompat.requestPermissions(this@RoundUpActivity,
                 arrayOf(Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE),
@@ -191,28 +205,41 @@ class RoundUpActivity : AppCompatActivity(),RoundUpContract.View{
 
     override fun dismissPopup() {
         // Dismiss the popup dialog
-        val popupDialog = supportFragmentManager.findFragmentByTag("roundup_dialog") as? DialogFragment
+        val popupDialog =
+            supportFragmentManager.findFragmentByTag("roundup_dialog") as? DialogFragment
         popupDialog?.dismiss()
     }
-    private fun saveImageToStorage(imageUri: Uri): Uri? {
-        val sourceStream = contentResolver.openInputStream(imageUri)
-        val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(Date())
-        val fileName = "IMG_${timeStamp}.jpg"
 
-        val imageFile = File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), fileName)
-        val destinationStream = FileOutputStream(imageFile)
-
-        sourceStream?.use { input ->
-            destinationStream.use { output ->
-                input.copyTo(output)
-            }
-        }
-
-        // Notify the MediaScanner about the new image so it appears in the gallery
-        MediaScannerConnection.scanFile(this, arrayOf(imageFile.path), null, null)
-
-        return Uri.fromFile(imageFile)
+    override fun onRoundUpImageUploaded(key: String) {
+        societyRoundup?.let { presenter.onShowPopupClicked(it, Uri.parse(key)) }
     }
+
+    override fun onRoundUpImageUploadFailed(key: String) {
+        TODO("Not yet implemented")
+    }
+
+//    private fun saveImageToStorage(bitmap: Bitmap): File? {
+//        val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(Date())
+//        val fileName = "IMG_$timeStamp.jpg"
+//
+//        val imageFile = File(getExternalFilesDir(null), fileName)
+//
+//        try {
+//            val outputStream = FileOutputStream(imageFile)
+//            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
+//            outputStream.flush()
+//            outputStream.close()
+//
+//            // The image has been saved to storage
+//            Toast.makeText(this, "Image saved to: ${imageFile.absolutePath}", Toast.LENGTH_SHORT)
+//                .show()
+//            return imageFile
+//        } catch (e: IOException) {
+//            e.printStackTrace()
+//            Toast.makeText(this, "Failed to save image", Toast.LENGTH_SHORT).show()
+//        }
+//        return null
+//    }
     private fun allPermissionsGranted(): Boolean {
         return arrayOf(
             Manifest.permission.CAMERA,

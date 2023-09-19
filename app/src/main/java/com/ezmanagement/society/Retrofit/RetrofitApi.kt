@@ -29,11 +29,23 @@ interface RetrofitApi {
     ): Call<JsonObject>
 
     @Multipart
-    @POST("storage/o/public/user/{userId}/avatar/{filename}")
-    fun uploadprofile_img(
-        @Path("userId") userId: String,
+    @POST("storage/o/public/society/{societyId}/roundup/{roundupId}/{filename}")
+    fun uploadRoundUp_img(
+        @Path("societyId") societyId: String,
+        @Path("roundupId") roundupId: String,
         @Path("filename") filename: String,
         @Part file: MultipartBody.Part,
-        @Header("Authorization") authHeader: String?
+
     ): Call<JsonObject>
+
+    @Multipart
+    @POST("storage/o/public/society/{societyId}/visitor/{visitorId}/{filename}")
+    fun uploadVisitor_img(
+        @Path("societyId") societyId: String,
+        @Path("visitorId") visitorId: String,
+        @Path("filename") filename: String,
+        @Part file: MultipartBody.Part,
+
+        ): Call<JsonObject>
 }
+//http://localhost:5200/storage/o/public/society/a1da4e77-a812-47c2-ac35-4ae962297333/visitor/193405b1-fd1d-4bec-ae31-73c7f1b53def/profile/ss_platte.png

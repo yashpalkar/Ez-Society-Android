@@ -3,8 +3,9 @@ package com.ezmanagement.society.Visitors
 import android.util.Log
 import androidx.lifecycle.LifecycleCoroutineScope
 import com.ezmanagement.society.AddVisitorCheckinMutation
-import com.ezmanagement.society.RegisterVisitorMutation
 import com.ezmanagement.society.Retrofit.ApiClient
+import com.ezmanagement.society.Visitors.RegisterVisirtors.AddVisitorContract
+import com.ezmanagement.society.Visitors.RegisterVisirtors.AddVisitorDetails
 import com.ezmanagement.society.sharedPreference.SharedPref
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder

@@ -1,4 +1,4 @@
-package com.ezmanagement.society.Visitors
+package com.ezmanagement.society.Visitors.RegisterVisirtors
 
 
 import android.content.Intent
@@ -15,12 +15,16 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import android.Manifest
-import android.net.Uri
+import android.graphics.Bitmap
 import android.provider.MediaStore
 import com.ezmanagement.society.*
 import com.ezmanagement.society.Model.VisitorModel
+import com.ezmanagement.society.Visitors.VisitorCallBack
+import com.ezmanagement.society.Visitors.VisitorCheckInPresenter
 import com.ezmanagement.society.databinding.ActivityAddVisitorDetailsBinding
 import com.ezmanagement.society.sharedPreference.SharedPref
+import com.ezmanagement.society.utils.Utils
+import java.io.File
 import java.time.ZonedDateTime
 
 
@@ -29,10 +33,11 @@ class AddVisitorDetails : AppCompatActivity(), View.OnClickListener,
     private lateinit var binding: ActivityAddVisitorDetailsBinding
     var sharedPref: SharedPref? = null
     var visitorModel: VisitorModel? = null
-    var addVisitorDetailsPresenter: AddVisitorDetailsPresenter? = null
+    var presenter: AddVisitorDetailsPresenter? = null
     var visitorDetailsPresenter: VisitorCheckInPresenter? = null
     private val CAMERA_PERMISSION_REQUEST_CODE = 100
     private val REQUEST_IMAGE_CAPTURE = 101
+    var file: File?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAddVisitorDetailsBinding.inflate(layoutInflater)
@@ -41,7 +46,7 @@ class AddVisitorDetails : AppCompatActivity(), View.OnClickListener,
         if (supportActionBar != null) {
             supportActionBar!!.hide()
         }
-        addVisitorDetailsPresenter = AddVisitorDetailsPresenter(lifecycleScope)
+        presenter = AddVisitorDetailsPresenter(lifecycleScope)
         visitorDetailsPresenter = VisitorCheckInPresenter(lifecycleScope)
 
         visitorModel = intent.getParcelableExtra<VisitorModel>(AppConstants.REGISTERED_VISITOR)
@@ -97,7 +102,7 @@ class AddVisitorDetails : AppCompatActivity(), View.OnClickListener,
                     )
 
                 } else {
-                    addVisitorDetailsPresenter?.registervisitor(
+                    presenter?.registervisitor(
                         jwtToken,
                         binding.visitorMobileTextInputLayoutEditText.text.toString(),
                         guardId,
@@ -133,8 +138,14 @@ class AddVisitorDetails : AppCompatActivity(), View.OnClickListener,
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            val imageBitmap = data?.extras?.get("data") as Bitmap?
+            if (imageBitmap != null) {
+                 file = Utils.saveBitmapToExternalFilesDir(this,imageBitmap)
+                if (file != null) {
 
-            val imageUri: Uri? = data?.data
+                }
+            }
+
 
 
         }
@@ -156,7 +167,6 @@ class AddVisitorDetails : AppCompatActivity(), View.OnClickListener,
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun visiterRegisterSuccessfully(registerVisitor: RegisterVisitorMutation.Insert_society_visitors_one) {
-        Log.d("registerVisitor.id", registerVisitor.id.toString())
         val currentDateTime = ZonedDateTime.now()
         val checkIn = currentDateTime.format(AppConstants.formatter)
         val jwtToken = sharedPref!!.getUserData(
@@ -164,6 +174,8 @@ class AddVisitorDetails : AppCompatActivity(), View.OnClickListener,
             String::class.java,
             ""
         )
+        file?.let { presenter?.uploadImage(it,registerVisitor.society_id.toString(),registerVisitor.id.toString()) }
+
         visitorDetailsPresenter?.visitorCheckIn(
             jwtToken,
             checkIn,
@@ -183,11 +195,11 @@ class AddVisitorDetails : AppCompatActivity(), View.OnClickListener,
     }
 
     override fun onError() {
-        TODO("Not yet implemented")
+
     }
 
     override fun onFailure(message: String) {
-        TODO("Not yet implemented")
+
     }
 
 

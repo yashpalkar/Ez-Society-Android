@@ -65,3 +65,6 @@ mutation UpdateCheckVisitor($_eq: uuid!, $_eq1: uuid!, $attended_time: timetz!, 
     affected_rows
   }
 }
+
+
+

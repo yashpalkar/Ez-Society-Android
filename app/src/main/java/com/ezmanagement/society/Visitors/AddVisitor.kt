@@ -15,6 +15,7 @@ import com.ezmanagement.society.R
 import com.ezmanagement.society.databinding.ActivityAddVisitorBinding
 import androidx.lifecycle.lifecycleScope
 import com.ezmanagement.society.Model.VisitorModel
+import com.ezmanagement.society.Visitors.RegisterVisirtors.AddVisitorDetails
 import com.ezmanagement.society.sharedPreference.SharedPref
 
 class AddVisitor : AppCompatActivity(),OnClickListener,VisitorCallBack.CheckVisitorCallBack {
@@ -71,13 +72,13 @@ class AddVisitor : AppCompatActivity(),OnClickListener,VisitorCallBack.CheckVisi
             verified = checkVisitorRegisterQuerySociety_visitor.verified,
             updated_at = checkVisitorRegisterQuerySociety_visitor.updated_at  // Replace with the actual value
         )
-        var intent=Intent(this@AddVisitor,AddVisitorDetails::class.java)
+        var intent=Intent(this@AddVisitor, AddVisitorDetails::class.java)
         intent.putExtra(AppConstants.REGISTERED_VISITOR,visitorModel)
         startActivity(intent)
     }
 
     override fun isEmpty(contactNumber:String) {
-        var intent=Intent(this@AddVisitor,AddVisitorDetails::class.java)
+        var intent=Intent(this@AddVisitor, AddVisitorDetails::class.java)
         intent.putExtra(AppConstants.CONTACT_NO,contactNumber)
         startActivity(intent)
     }
