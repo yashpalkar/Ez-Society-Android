@@ -72,6 +72,8 @@ dependencies {
     implementation("com.apollographql.apollo3:apollo-api:3.8.2")
     implementation("com.apollographql.apollo3:apollo-normalized-cache-sqlite:3.8.2")
     implementation 'com.github.yuriy-budiyev:code-scanner:2.3.2'
+    implementation "androidx.camera:camera-camera2:1.1.0-alpha03"
+    implementation "androidx.camera:camera-lifecycle:1.1.0-alpha03"
 
 }
 java {

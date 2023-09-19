@@ -6,9 +6,10 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/visitorImageview"
-        android:layout_width="@dimen/_60sdp"
+        android:layout_width="0dp"
         android:layout_height="@dimen/_62sdp"
         android:layout_marginVertical="@dimen/_10sdp"
+        app:layout_constraintWidth_percent=".2"
         android:src="@drawable/profile_avatar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,8 +24,9 @@
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="@dimen/_180sdp"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
+        app:layout_constraintWidth_percent=".75"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/visitorImageview"
         android:layout_marginHorizontal="@dimen/_7sdp"
@@ -81,8 +83,8 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/uber_move_medium"
             android:text="Check-out-"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/checkin_time_title" />
+          app:layout_constraintEnd_toStartOf="@+id/checkout_time_valueTextView"
+            app:layout_constraintTop_toBottomOf="@id/mobileNumberTextView" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/checkout_time_valueTextView"
@@ -91,8 +93,8 @@
             android:layout_marginHorizontal="@dimen/_5sdp"
             android:fontFamily="@font/uber_move_medium"
             android:text="Check In-"
-            app:layout_constraintStart_toEndOf="@id/checkout_time_title"
-            app:layout_constraintTop_toBottomOf="@id/checkin_time_valueTextView" />
+           app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/mobileNumberTextView" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/flatno_titileTextView"
@@ -112,38 +114,59 @@
             android:text="06"
             app:layout_constraintStart_toEndOf="@id/flatno_titileTextView"
             app:layout_constraintTop_toBottomOf="@id/checkout_time_valueTextView" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/attended_time_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/uber_move_medium"
+            android:text="Check-out-"
+            android:visibility="gone"
+            app:layout_constraintEnd_toStartOf="@+id/checkout_time_valueTextView"
+            app:layout_constraintTop_toBottomOf="@id/checkout_time_title" />
 
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/attended_time_valueTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_5sdp"
+            android:fontFamily="@font/uber_move_medium"
+            android:text="Check In-"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/checkout_time_valueTextView" />
 
+        <LinearLayout
+            android:id="@+id/checkoutLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_rounded_green"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginRight="@dimen/_10sdp"
+android:visibility="visible"
+            android:paddingHorizontal="10dp">
+
+            <TextView
+                android:id="@+id/checkouttext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:fontFamily="@font/uber_move_medium"
+                android:text="Out"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_10sdp" />
+
+            <ImageView
+                android:id="@+id/checkoutarrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_baseline_arrow_forward_24" />
+
+        </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <LinearLayout
-        android:id="@+id/checkoutLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/button_rounded_green"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginRight="@dimen/_10sdp"
-        android:paddingHorizontal="10dp">
 
-        <TextView
-            android:id="@+id/checkouttext"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:fontFamily="@font/uber_move_medium"
-            android:text="Out"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_10sdp" />
-
-        <ImageView
-            android:id="@+id/checkoutarrow"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_baseline_arrow_forward_24" />
-
-    </LinearLayout>
 
 
 

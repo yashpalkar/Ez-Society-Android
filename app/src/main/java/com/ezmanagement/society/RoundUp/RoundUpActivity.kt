@@ -3,8 +3,10 @@ package com.ezmanagement.society.RoundUp
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.media.MediaScannerConnection
 import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
 import android.view.View
 import android.widget.Toast
@@ -23,6 +25,10 @@ import com.ezmanagement.society.databinding.ActivityRoundUpBinding
 import com.ezmanagement.society.sharedPreference.SharedPref
 import org.json.JSONException
 import org.json.JSONObject
+import java.io.File
+import java.io.FileOutputStream
+import java.text.SimpleDateFormat
+import java.util.*
 
 class RoundUpActivity : AppCompatActivity(),RoundUpContract.View{
     lateinit var binding: ActivityRoundUpBinding
@@ -51,7 +57,7 @@ class RoundUpActivity : AppCompatActivity(),RoundUpContract.View{
             // Permission is not granted, request it
             ActivityCompat.requestPermissions(
                 this@RoundUpActivity,
-                arrayOf(Manifest.permission.CAMERA),
+                arrayOf(Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE),
                 CAMERA_PERMISSION_REQUEST_CODE
             )
         } else {
@@ -134,13 +140,17 @@ class RoundUpActivity : AppCompatActivity(),RoundUpContract.View{
         }
 
     }
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             binding.scannerView.visibility=View.GONE
             val imageUri: Uri? = data?.data
-             var imageUris: Uri= Uri.parse("file://storage/emulated/0/Download/myfile.txt")
-            societyRoundup?.let { presenter.onShowPopupClicked(it,imageUris) }
+            imageUri?.let { uri ->
+                // Save the captured image to storage
+                val savedUri = saveImageToStorage(uri)
+                societyRoundup?.let { presenter.onShowPopupClicked(it, savedUri) }
+            }
+            societyRoundup?.let { presenter.onShowPopupClicked(it,imageUri) }
         }else{
             societyRoundup=null
         }
@@ -152,7 +162,7 @@ class RoundUpActivity : AppCompatActivity(),RoundUpContract.View{
             != PackageManager.PERMISSION_GRANTED) {
             // Permission is not granted, request it
             ActivityCompat.requestPermissions(this@RoundUpActivity,
-                arrayOf(Manifest.permission.CAMERA),
+                arrayOf(Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE),
                 CAMERA_PERMISSION_REQUEST_CODE)
         } else {
             // Permission is already granted, open the camera
@@ -183,5 +193,32 @@ class RoundUpActivity : AppCompatActivity(),RoundUpContract.View{
         // Dismiss the popup dialog
         val popupDialog = supportFragmentManager.findFragmentByTag("roundup_dialog") as? DialogFragment
         popupDialog?.dismiss()
+    }
+    private fun saveImageToStorage(imageUri: Uri): Uri? {
+        val sourceStream = contentResolver.openInputStream(imageUri)
+        val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(Date())
+        val fileName = "IMG_${timeStamp}.jpg"
+
+        val imageFile = File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), fileName)
+        val destinationStream = FileOutputStream(imageFile)
+
+        sourceStream?.use { input ->
+            destinationStream.use { output ->
+                input.copyTo(output)
+            }
+        }
+
+        // Notify the MediaScanner about the new image so it appears in the gallery
+        MediaScannerConnection.scanFile(this, arrayOf(imageFile.path), null, null)
+
+        return Uri.fromFile(imageFile)
+    }
+    private fun allPermissionsGranted(): Boolean {
+        return arrayOf(
+            Manifest.permission.CAMERA,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+        ).all {
+            ContextCompat.checkSelfPermission(this, it) == PackageManager.PERMISSION_GRANTED
+        }
     }
 }
