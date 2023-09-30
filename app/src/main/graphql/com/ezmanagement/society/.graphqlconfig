@@ -4,7 +4,7 @@
   "extensions": {
     "endpoints": {
       "Default GraphQL Endpoint": {
-        "url": "http://192.168.0.101:5280/v1/graphql",
+        "url": "https://api.society.ezmanagement.in/v1/graphql",
         "headers": {
           "x-hasura-admin-secret": "NjiufkjDjhrJlLIKHndnlk38ng9938hjkl33ddj83hjdhf82jjkHF8njJaaqeiuldoi99",
           "user-agent": "JS GraphQL"

@@ -6,7 +6,6 @@ import java.time.format.DateTimeFormatter
 
 
 object AppConstants {
-    const val BASE_URL = "https://api.example.com/"
     const val API_KEY = "your_api_key"
     const val TIMEOUT_IN_SECONDS = 30
     const val MAX_RETRIES = 3
@@ -26,6 +25,12 @@ object AppConstants {
     const val REGISTERED_VISITOR = "registerd_visitor"
     @RequiresApi(Build.VERSION_CODES.O)
     val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX")
+    val RECHECKIN="re_check_in"
+    val NEWVISITOR="new_visitor"
+    val VISITORTYPE="visitor_type"
+    val BASE_URL="https://auth.society.ezmanagement.in"
+
+
 
     // Add other constants as needed
 }

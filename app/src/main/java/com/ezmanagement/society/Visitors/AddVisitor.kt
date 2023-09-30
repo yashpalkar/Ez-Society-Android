@@ -14,9 +14,11 @@ import com.ezmanagement.society.CheckVisitorRegisterQuery
 import com.ezmanagement.society.R
 import com.ezmanagement.society.databinding.ActivityAddVisitorBinding
 import androidx.lifecycle.lifecycleScope
+import com.ezmanagement.society.CheckVisitorNumberMutation
 import com.ezmanagement.society.Model.VisitorModel
 import com.ezmanagement.society.Visitors.RegisterVisirtors.AddVisitorDetails
 import com.ezmanagement.society.sharedPreference.SharedPref
+import org.json.JSONObject
 
 class AddVisitor : AppCompatActivity(),OnClickListener,VisitorCallBack.CheckVisitorCallBack {
     private lateinit var binding: ActivityAddVisitorBinding
@@ -59,29 +61,55 @@ class AddVisitor : AppCompatActivity(),OnClickListener,VisitorCallBack.CheckVisi
 
     }
 
-    override fun isVisitorRegister(checkVisitorRegisterQuerySociety_visitor: CheckVisitorRegisterQuery.Society_visitor) {
+//    override fun isVisitorRegister(checkVisitorRegisterQuerySociety_visitor: CheckVisitorRegisterQuery.Society_visitor) {
+//        val visitorModel =
+//            VisitorModel(
+//            contact_no = checkVisitorRegisterQuerySociety_visitor.contact_no,
+//            created_at = checkVisitorRegisterQuerySociety_visitor.created_at, // Replace with the actual value
+//            guard_id = checkVisitorRegisterQuerySociety_visitor.guard_id,   // Replace with the actual value
+//            id = checkVisitorRegisterQuerySociety_visitor.id,         // Replace with the actual value
+//            last_visited_at = checkVisitorRegisterQuerySociety_visitor.last_visited_at, // Replace with the actual value
+//            society_id = checkVisitorRegisterQuerySociety_visitor.society_id, // Replace with the actual value
+//            name = checkVisitorRegisterQuerySociety_visitor.name,
+//            verified = checkVisitorRegisterQuerySociety_visitor.verified,
+//            updated_at = checkVisitorRegisterQuerySociety_visitor.updated_at  // Replace with the actual value
+//        )
+//        var intent=Intent(this@AddVisitor, AddVisitorDetails::class.java)
+//        intent.putExtra(AppConstants.REGISTERED_VISITOR,visitorModel)
+//        startActivity(intent)
+//    }
+
+    override fun isRecheckIn(checkVisitorNumberMutation: CheckVisitorNumberMutation.CheckVisitorNumber) {
+        val json = checkVisitorNumberMutation.visitor_data?.let { JSONObject(it) }
         val visitorModel =
-            VisitorModel(
-            contact_no = checkVisitorRegisterQuerySociety_visitor.contact_no,
-            created_at = checkVisitorRegisterQuerySociety_visitor.created_at, // Replace with the actual value
-            guard_id = checkVisitorRegisterQuerySociety_visitor.guard_id,   // Replace with the actual value
-            id = checkVisitorRegisterQuerySociety_visitor.id,         // Replace with the actual value
-            last_visited_at = checkVisitorRegisterQuerySociety_visitor.last_visited_at, // Replace with the actual value
-            society_id = checkVisitorRegisterQuerySociety_visitor.society_id, // Replace with the actual value
-            name = checkVisitorRegisterQuerySociety_visitor.name,
-            verified = checkVisitorRegisterQuerySociety_visitor.verified,
-            updated_at = checkVisitorRegisterQuerySociety_visitor.updated_at  // Replace with the actual value
-        )
+            json?.getBoolean("verified")?.let {
+                VisitorModel(
+                    contact_no = json.getString("contact_no"),
+                    created_at = json.getString("created_at"), // Replace with the actual value
+                    guard_id = json.getString("guard_id"),   // Replace with the actual value
+                    id = json.getString("id"),         // Replace with the actual value
+                    last_visited_at = json.getString("last_visited_at"), // Replace with the actual value
+                    society_id = json.getString("society_id"), // Replace with the actual value
+                    name = json.getString("name"),
+                    image = json.getString("image"),
+                    verified = it,
+                    updated_at = json.getString("updated_at")  // Replace with the actual value
+                )
+            }
         var intent=Intent(this@AddVisitor, AddVisitorDetails::class.java)
+        intent.putExtra(AppConstants.VISITORTYPE,checkVisitorNumberMutation.visitor_type)
         intent.putExtra(AppConstants.REGISTERED_VISITOR,visitorModel)
         startActivity(intent)
     }
 
-    override fun isEmpty(contactNumber:String) {
+    override fun isNewVisitor(contactNumber: String, visitor_type: String) {
         var intent=Intent(this@AddVisitor, AddVisitorDetails::class.java)
         intent.putExtra(AppConstants.CONTACT_NO,contactNumber)
+        intent.putExtra(AppConstants.VISITORTYPE,visitor_type)
         startActivity(intent)
     }
+
+
 
     override fun onError() {
 

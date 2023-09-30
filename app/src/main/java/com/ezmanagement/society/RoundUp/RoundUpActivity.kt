@@ -24,36 +24,30 @@ import com.ezmanagement.society.sharedPreference.SharedPref
 import com.ezmanagement.society.utils.Utils
 import org.json.JSONException
 import org.json.JSONObject
-import retrofit2.http.Url
-import java.io.File
-import java.io.FileOutputStream
-import java.io.IOException
-import java.text.SimpleDateFormat
-import java.util.*
 
-class RoundUpActivity : AppCompatActivity(),RoundUpContract.View{
+class RoundUpActivity : AppCompatActivity(), RoundUpContract.View {
     lateinit var binding: ActivityRoundUpBinding
     private lateinit var codeScanner: CodeScanner
     private lateinit var presenter: RoundUpContract.Presenter
     private val CAMERA_PERMISSION_REQUEST_CODE = 100
     private val REQUEST_IMAGE_CAPTURE = 101
-    var jwtToken:String?=null
-    var societyId:String?=null
-    var societyRoundup: GetRoundUpIdQuery.Society_roundups_by_pk?=null
+    var jwtToken: String? = null
+    var societyId: String? = null
+    var societyRoundup: GetRoundUpIdQuery.Society_roundups_by_pk? = null
     var sharedPref: SharedPref? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRoundUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
         codeScanner = CodeScanner(this, binding.scannerView)
-        presenter=RoundPresenter(this, lifecycleScope = lifecycleScope)
+        presenter = RoundPresenter(this, lifecycleScope = lifecycleScope)
         sharedPref = SharedPref(this);
         jwtToken = sharedPref!!.getUserData(
             AppConstants.JWTTOKEN,
             String::class.java,
             ""
         )
-         societyId = sharedPref!!.getUserData(
+        societyId = sharedPref!!.getUserData(
             AppConstants.SOCIETY_ID,
             String::class.java,
             ""
@@ -64,7 +58,7 @@ class RoundUpActivity : AppCompatActivity(),RoundUpContract.View{
             // Permission is not granted, request it
             ActivityCompat.requestPermissions(
                 this@RoundUpActivity,
-                arrayOf(Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE),
                 CAMERA_PERMISSION_REQUEST_CODE
             )
         } else {
@@ -88,11 +82,11 @@ class RoundUpActivity : AppCompatActivity(),RoundUpContract.View{
 
                 try {
                     var obj = JSONObject(it.text.toString())
-                    var roundupid = obj.get("roundupId")
+                    var roundupid = obj.get("location")
                     jwtToken?.let { it1 -> presenter.isQRValid(roundupid.toString(), it1) }
                     codeScanner.stopPreview()
-                }catch(e:JSONException){
-                    Toast.makeText(this,e.message.toString(),Toast.LENGTH_LONG).show()
+                } catch (e: JSONException) {
+                    Toast.makeText(this, e.message.toString(), Toast.LENGTH_LONG).show()
                     codeScanner.startPreview()
                     return@runOnUiThread
                 }
@@ -139,6 +133,7 @@ class RoundUpActivity : AppCompatActivity(),RoundUpContract.View{
             }
         }
     }
+
     private fun openCamera() {
         val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         if (takePictureIntent.resolveActivity(packageManager) != null) {
@@ -147,16 +142,17 @@ class RoundUpActivity : AppCompatActivity(),RoundUpContract.View{
         }
 
     }
-     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             binding.scannerView.visibility = View.GONE
             val imageUri: Uri? = data?.data
             val imageBitmap = data?.extras?.get("data") as Bitmap?
             if (imageBitmap != null) {
-                var file = Utils.saveBitmapToExternalFilesDir(this,imageBitmap)
+                var file = Utils.saveBitmapToExternalFilesDir(this, imageBitmap)
                 if (file != null) {
-                    presenter.uploadImage(file,societyId.toString(),societyRoundup?.id.toString())
+                    presenter.uploadImage(file, societyId.toString(), societyRoundup?.id.toString())
                 }
             }
 //            imageUri?.let { uri ->
@@ -165,19 +161,20 @@ class RoundUpActivity : AppCompatActivity(),RoundUpContract.View{
 //                societyRoundup?.let { presenter.onShowPopupClicked(it, savedUri) }
 //            }
 
-        }else{
-            societyRoundup=null
+        } else {
+            societyRoundup = null
         }
     }
 
     override fun validQr(societyRoundup: GetRoundUpIdQuery.Society_roundups_by_pk) {
-       this.societyRoundup=societyRoundup
-        if (allPermissionsGranted())
-             {
+        this.societyRoundup = societyRoundup
+        if (allPermissionsGranted()) {
             // Permission is not granted, request it
-            ActivityCompat.requestPermissions(this@RoundUpActivity,
-                arrayOf(Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE),
-                CAMERA_PERMISSION_REQUEST_CODE)
+            ActivityCompat.requestPermissions(
+                this@RoundUpActivity,
+                arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                CAMERA_PERMISSION_REQUEST_CODE
+            )
         } else {
             // Permission is already granted, open the camera
 
@@ -187,9 +184,9 @@ class RoundUpActivity : AppCompatActivity(),RoundUpContract.View{
     }
 
     override fun inValidQr(message: String?) {
-        societyRoundup=null
-      Toast.makeText(this,message,Toast.LENGTH_SHORT).show()
-        binding.scannerView.visibility=View.VISIBLE
+        societyRoundup = null
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+        binding.scannerView.visibility = View.VISIBLE
         codeScanner.startPreview()
     }
 
@@ -198,7 +195,7 @@ class RoundUpActivity : AppCompatActivity(),RoundUpContract.View{
         imageUri: Uri?
     ) {
         val popupDialog = imageUri?.let { RoundupDialog(societyRoundup, it) }
-
+        popupDialog?.isCancelable = false
         popupDialog?.show(supportFragmentManager, "roundup_dialog")
     }
 
@@ -207,6 +204,7 @@ class RoundUpActivity : AppCompatActivity(),RoundUpContract.View{
         // Dismiss the popup dialog
         val popupDialog =
             supportFragmentManager.findFragmentByTag("roundup_dialog") as? DialogFragment
+        startActivity(Intent(this, MainActivity::class.java))
         popupDialog?.dismiss()
     }
 
@@ -218,7 +216,7 @@ class RoundUpActivity : AppCompatActivity(),RoundUpContract.View{
         TODO("Not yet implemented")
     }
 
-//    private fun saveImageToStorage(bitmap: Bitmap): File? {
+    //    private fun saveImageToStorage(bitmap: Bitmap): File? {
 //        val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(Date())
 //        val fileName = "IMG_$timeStamp.jpg"
 //

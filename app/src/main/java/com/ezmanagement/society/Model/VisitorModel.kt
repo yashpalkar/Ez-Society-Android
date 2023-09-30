@@ -5,21 +5,25 @@ import android.os.Parcelable
 
 data class VisitorModel(
 
+
 val contact_no: String?,
 val created_at: Any?,
 val guard_id: Any?,
 val id: Any?,
+val image: String?,
 val last_visited_at: Any?,
 val society_id: Any?,
 val name: String?,
 val verified: Boolean,
 val updated_at: Any?
+
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
     parcel.readString(),
     parcel.readValue(Any::class.java.classLoader),
     parcel.readValue(Any::class.java.classLoader),
     parcel.readValue(Any::class.java.classLoader),
+    parcel.readString(),
     parcel.readValue(Any::class.java.classLoader),
     parcel.readValue(Any::class.java.classLoader),
     parcel.readString(),
@@ -32,6 +36,7 @@ val updated_at: Any?
         parcel.writeValue(created_at)
         parcel.writeValue(guard_id)
         parcel.writeValue(id)
+        parcel.writeString(image)
         parcel.writeValue(last_visited_at)
         parcel.writeValue(society_id)
         parcel.writeString(name)

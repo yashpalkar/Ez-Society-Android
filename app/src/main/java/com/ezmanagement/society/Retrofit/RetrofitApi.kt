@@ -39,10 +39,10 @@ interface RetrofitApi {
     ): Call<JsonObject>
 
     @Multipart
-    @POST("storage/o/public/society/{societyId}/visitor/{visitorId}/{filename}")
+    @POST("storage/o/public/society/{societyId}/visitor//{filename}")
     fun uploadVisitor_img(
         @Path("societyId") societyId: String,
-        @Path("visitorId") visitorId: String,
+//        @Path("visitorId") visitorId: String,
         @Path("filename") filename: String,
         @Part file: MultipartBody.Part,
 

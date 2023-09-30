@@ -86,7 +86,7 @@ class CheckedInVisitorActivity : AppCompatActivity(), CheckedInVisitorContract.V
         jwtToken?.let {
             societyId?.let { it1 ->
                 presenter.updatecheckVisitor(
-                    it1,data.id.toString(),dateTimeNow,dateTimeNow,
+                    it1,data.id.toString(),LocalDateTime.now().toString(),dateTimeNow,
                     it
                 )
             }

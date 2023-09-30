@@ -25,11 +25,11 @@
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
-        app:layout_constraintGuide_percent="0.4"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:orientation="horizontal"
-app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintGuide_begin="293dp" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline1"
@@ -58,8 +58,9 @@ app:layout_constraintEnd_toEndOf="parent"/>
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             android:background="@drawable/login_joinus_bg_grey_rounded"
-            android:padding="3dp"
-            android:layout_margin="20dp">
+            android:padding="1dp"
+            android:layout_marginHorizontal="@dimen/_20sdp"
+            android:layout_marginVertical="30dp">
 
             <TextView
                 android:layout_width="0dp"
@@ -69,6 +70,7 @@ app:layout_constraintEnd_toEndOf="parent"/>
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintWidth_percent="0.5"
                 android:text="Login"
+                android:fontFamily="@font/uber_move_medium"
                 android:textColor="@color/black"
                 android:paddingVertical="7dp"
                 android:textAlignment="center"
@@ -92,9 +94,10 @@ app:layout_constraintEnd_toEndOf="parent"/>
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toRightOf="@+id/guideline3"
-
+                android:fontFamily="@font/uber_move_medium"
                 app:layout_constraintRight_toRightOf="parent"
                 android:text="Join Us"
+                android:textColor="@color/white"
                 android:paddingVertical="7dp"
                 android:textAlignment="center"
                 android:textSize="@dimen/_15sdp"
@@ -102,94 +105,113 @@ app:layout_constraintEnd_toEndOf="parent"/>
                 />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/emailInputLayout"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/loginjoinusConstraintLayout"
-            app:layout_constraintEnd_toEndOf="parent">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/emaileditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Email"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="10dp"
-            android:paddingStart="12dp"
-            android:paddingEnd="12dp"
-
-            android:drawableStart="@drawable/ic_baseline_email_24"
-            android:drawablePadding="8dp"
-            app:startIconContentDescription="Email"
-
-            android:inputType="textEmailAddress" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/passwordTextInputLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/emailInputLayout"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginVertical="20dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:passwordToggleEnabled="true">
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/loginjoinusConstraintLayout">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/passwordeditText"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/emailInputLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Password"
-                android:layout_marginVertical="10dp"
-                android:paddingStart="12dp"
-                android:paddingEnd="12dp"
+                android:layout_margin="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-                android:drawableStart="@drawable/ic_baseline_lock_24"
-                android:drawablePadding="8dp"
-                app:startIconContentDescription="Email"
-                android:inputType="textPassword"
-                app:endIconMode="password_toggle"
-                app:endIconTint="#6F947D"/>
 
-        </com.google.android.material.textfield.TextInputLayout>
-        <CheckBox
-            android:id="@+id/rememberCheckBox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Remember Me"
-           app:layout_constraintTop_toBottomOf="@+id/passwordTextInputLayout"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="16dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp" />
-        <TextView
-            android:id="@+id/forgotPasswordTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Forgot Password?"
-            app:layout_constraintTop_toTopOf="@id/rememberCheckBox"
-            app:layout_constraintBottom_toBottomOf="@+id/rememberCheckBox"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp" />
-        <Button
-            android:id="@+id/loginButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Login"
-            android:textAllCaps="false"
-            app:layout_constraintTop_toBottomOf="@id/forgotPasswordTextView"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginVertical="30dp"
-            android:layout_marginStart="16dp"
-            android:background="@drawable/button_rounded_green"
-            android:layout_marginEnd="16dp" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/emaileditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:drawableStart="@drawable/ic_baseline_email_24"
+                    android:drawablePadding="8dp"
+                    android:fontFamily="@font/uber_move_medium"
+                    android:hint="Email"
+                    android:inputType="textEmailAddress"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+
+                    app:startIconContentDescription="Email" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/passwordTextInputLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/emailInputLayout"
+                app:passwordToggleEnabled="true">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/passwordeditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="10dp"
+                    android:drawableStart="@drawable/ic_baseline_lock_24"
+                    android:drawablePadding="8dp"
+                    android:fontFamily="@font/uber_move_medium"
+                    android:hint="Password"
+                    android:inputType="textPassword"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    app:endIconMode="password_toggle"
+                    app:endIconTint="#6F947D"
+                    app:startIconContentDescription="Email" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <CheckBox
+                android:id="@+id/rememberCheckBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:fontFamily="@font/uber_move_medium"
+                android:text="Remember Me"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/passwordTextInputLayout" />
+
+            <TextView
+                android:id="@+id/forgotPasswordTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:fontFamily="@font/uber_move_medium"
+                android:text="Forgot Password?"
+                app:layout_constraintBottom_toBottomOf="@+id/rememberCheckBox"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/rememberCheckBox" />
+
+            <Button
+                android:id="@+id/loginButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="30dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/button_rounded_green"
+                android:fontFamily="@font/uber_move_medium"
+                android:text="Login"
+                android:textAllCaps="false"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/forgotPasswordTextView" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

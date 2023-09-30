@@ -35,17 +35,24 @@ class CheckedInVisitorAdapter (
                         visitor.check_out.toString(), DateTimeFormatter.ISO_DATE_TIME
                     )
                     binding.checkoutLayout.visibility = View.GONE
+                    binding.checkoutTimeTitle.visibility= View.VISIBLE
+                    binding.checkoutTimeValueTextView.visibility= View.VISIBLE
                     binding.checkoutTimeValueTextView.text =
                         checkoutDateTime.dayOfMonth.toString() + " " + checkoutDateTime.month.toString()
                             .substring(
                                 0, 3
                             ) + " . " + checkoutDateTime.hour + ":" + checkoutDateTime.minute
                 } else {
-//                    binding.checkoutLayout.visibility= View.GONE
+                    binding.checkoutTimeTitle.visibility= View.GONE
+                    binding.checkoutTimeValueTextView.visibility= View.GONE
+                    binding.attendedTimeTitle.visibility=View.GONE
+                    binding.attendedTimeValueTextView.visibility=View.GONE
+                    binding.checkoutLayout.visibility = View.VISIBLE
                 }
                 binding.checkoutLayout.setOnClickListener { cellClickListener.onClickcheckOut(visitor) }
                 binding.visitorNameTextView.text =
                     visitor.society_visitors_checkin_society_visitor.name
+                binding.mobileNumberTextView.text=visitor.society_visitors_checkin_society_visitor.contact_no
             }
 
         }

@@ -1,14 +1,17 @@
 package com.ezmanagement.society.Visitors.RegisterVisirtors
 
+
 import android.os.Build
 import android.util.Log
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.LifecycleCoroutineScope
-import com.ezmanagement.society.RegisterVisitorMutation
-
 import com.ezmanagement.society.Retrofit.ApiClient
 import com.ezmanagement.society.Retrofit.RetrofitApi
 import com.ezmanagement.society.Retrofit.RetrofitService
+import com.ezmanagement.society.VisitorRecheckInMutation
+import com.ezmanagement.society.Visitors.AddVisitor
+import com.ezmanagement.society.common.LogUtlis
 import com.ezmanagement.society.sharedPreference.SharedPref
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -21,35 +24,65 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.io.File
 
-class AddVisitorDetailsPresenter (private val lifecycleScope: LifecycleCoroutineScope,):AddVisitorContract.Presenter {
+class AddVisitorDetailsPresenter() :
+    AddVisitorContract.Presenter {
     var sharedPref: SharedPref? = null
+    lateinit var view:AddVisitorContract.View
+    lateinit var lifecycleScope: LifecycleCoroutineScope
+    constructor( lifecycleScope: LifecycleCoroutineScope,view:AddVisitorContract.View) : this() {
+        this.view=view
+        this.lifecycleScope=lifecycleScope
+    }
+
     @RequiresApi(Build.VERSION_CODES.O)
-    override fun registervisitor(
+    override fun visitorRecheckIn(
         jwt_token: String,
-        contactNo: String,
-        guardId: String,
-        lastVisitedAT: String,
-        visitorName: String,
-        societyId: String,
-        isVerifed: Boolean,
-        imageString:String,
+        visitor_type: String,
+        visitor_id: String,
+        check_in_time: String,
+        flat_no: String,
+        guard_id: String,
+        image: String,
+        last_visited_at: String,
+        name: String,
+        verified: String,
+        society_id: String,
+        contact_no: String,
         addVisitorDetails: AddVisitorDetails
     ) {
         val gson = GsonBuilder().create()
         var apiClient = ApiClient()
+
         lifecycleScope.launchWhenResumed {
             try {
 
                 val response = apiClient!!.getApolloClient().mutation(
-                    RegisterVisitorMutation(contactNo,guardId,lastVisitedAT,visitorName,societyId, isVerifed,imageString)
+                    VisitorRecheckInMutation(
+                        visitor_type = visitor_type,
+                        visitor_id,
+                        check_in_time,
+                        flat_no,
+                        guard_id,
+                        image,
+                        last_visited_at,
+                        name,
+                        verified,
+                        society_id,
+                        contact_no
+                    )
                 ).addHttpHeader(
                     "Authorization", "Bearer $jwt_token"
                 ).execute()
                 Log.d("RESPONSE_ERROR", response.errors.toString())
-                var data:RegisterVisitorMutation.Data? = response.data;
+                var data: VisitorRecheckInMutation.Data? = response.data;
                 val gson = Gson()
-                if(data?.insert_society_visitors_one?.id!=null){
-                    addVisitorDetails.visiterRegisterSuccessfully(data.insert_society_visitors_one!!)
+                if (data?.visitorsCheckin?.message.equals("Visitor updated and checked in successfully")) {
+                    Toast.makeText(
+                        addVisitorDetails,
+                        data?.visitorsCheckin?.message,
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    addVisitorDetails.visiterRegisterSuccessfully(visitor_id, society_id)
                 }
                 val result = gson.toJson(data)
 
@@ -60,7 +93,8 @@ class AddVisitorDetailsPresenter (private val lifecycleScope: LifecycleCoroutine
 
         }
     }
-     override fun uploadImage(file: File, societyId:String, visitorId:String) {
+
+    override fun uploadImage(file: File, societyId: String) {
 
 
         val filePart = MultipartBody.Part.createFormData(
@@ -72,16 +106,18 @@ class AddVisitorDetailsPresenter (private val lifecycleScope: LifecycleCoroutine
         var retrofit = RetrofitService.getInstance()
         val retrofitApi = retrofit.create(RetrofitApi::class.java)
 
-        val call: Call<JsonObject> = retrofitApi.uploadVisitor_img(societyId,visitorId,file.name,filePart).also {  }
+        val call: Call<JsonObject> =
+            retrofitApi.uploadVisitor_img(societyId, file.name, filePart).also { }
 
         call.enqueue(object : Callback<JsonObject?> {
             override fun onResponse(call: Call<JsonObject?>, response: Response<JsonObject?>) {
-                if(response.code()==200){
-                    val key:String=response.body()!!.get("key").asString
+                if (response.code() == 200) {
+                    val key: String = response.body()!!.get("key").asString
+                    LogUtlis.info("IMAgeKey", key)
+                    view.imageuploadSuccessfully()
+                } else {
 
-                }
-                else{
-
+                    view.imageuploadfailed()
                 }
             }
 
@@ -93,6 +129,6 @@ class AddVisitorDetailsPresenter (private val lifecycleScope: LifecycleCoroutine
     }
 
     override fun updateIamgeinVisirtor(visitorId: String, ImageKey: String) {
-        TODO("Not yet implemented")
+
     }
 }

@@ -1,5 +1,6 @@
 package com.ezmanagement.society.Retrofit
 
+import com.ezmanagement.society.AppConstants
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -20,7 +21,7 @@ object RetrofitService {
 
 
         var retrofit: Retrofit = retrofit2.Retrofit.Builder()
-            .baseUrl("http://192.168.0.101:5200/")
+            .baseUrl(AppConstants.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .client(mOkHttpClient)
             .build()

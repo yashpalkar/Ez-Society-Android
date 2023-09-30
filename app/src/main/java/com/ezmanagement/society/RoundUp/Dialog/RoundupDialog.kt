@@ -16,6 +16,7 @@ import androidx.lifecycle.lifecycleScope
 import com.ezmanagement.society.AppConstants
 import com.ezmanagement.society.GetRoundUpIdQuery
 import com.ezmanagement.society.MainActivity
+import com.ezmanagement.society.RoundUp.RoundUpActivity
 import com.ezmanagement.society.databinding.RoundupDialogBinding
 import com.ezmanagement.society.sharedPreference.SharedPref
 import java.time.LocalDateTime
@@ -74,6 +75,7 @@ class RoundupDialog(societyRoundup: GetRoundUpIdQuery.Society_roundups_by_pk, im
         }
         binding.cancelRoundup.setOnClickListener {
             dismiss()
+            startActivity(Intent(context, MainActivity::class.java))
         }
         return view
     }

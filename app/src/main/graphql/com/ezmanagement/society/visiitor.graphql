@@ -66,5 +66,35 @@ mutation UpdateCheckVisitor($_eq: uuid!, $_eq1: uuid!, $attended_time: timetz!, 
   }
 }
 
+mutation CheckVisitorNumber($visitor_number: String!, $society_id: String!) {
+    checkVisitorNumber(object: {visitor_number: $visitor_number, society_id: $society_id}) {
+      visitor_data
+      visitor_type
+    }
+  }
+
+mutation NewVisitorCheckIN($visitor_data: VisitorDataInput!, $visitor_type: String!) {
+  visitorsCheckin(visitor_type: $visitor_type, visitor_data: $visitor_data) {
+    message
+  }
+}
+  mutation VisitorRecheckIn($visitor_type: String!, $visitor_id: String!, $check_in_time: String!, $flat_no: String!, $guard_id: String!, $image: String!, $last_visited_at: String!, $name: String!, $verified: String!, $society_id: String!, $contact_no: String!) {
+    visitorsCheckin(visitor_type: $visitor_type, visitor_data: {check_in_time: $check_in_time, guard_id: $guard_id, visitor_id: $visitor_id, flat_no: $flat_no, image: $image, last_visited_at: $last_visited_at, name: $name, verified: $verified, contact_no: $contact_no, society_id: $society_id}) {
+      message
+    }
+  }
+
+  mutation AddVisitorImage($image: String!, $id: uuid!) {
+    update_society_visitors_by_pk(pk_columns: {id: $id}, _set: {image: $image}) {
+      image
+      name
+    }
+  }
+
+
+
+
+
+
 
 

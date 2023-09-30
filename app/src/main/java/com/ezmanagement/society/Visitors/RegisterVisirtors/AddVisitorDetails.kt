@@ -1,12 +1,13 @@
 package com.ezmanagement.society.Visitors.RegisterVisirtors
 
 
+import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
-
+import android.graphics.Bitmap
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
+import android.provider.MediaStore
 import android.view.View
 import android.widget.Toast
 import androidx.annotation.RequiresApi
@@ -14,21 +15,21 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
-import android.Manifest
-import android.graphics.Bitmap
-import android.provider.MediaStore
 import com.ezmanagement.society.*
 import com.ezmanagement.society.Model.VisitorModel
+import com.ezmanagement.society.Visitors.AddVisitor
 import com.ezmanagement.society.Visitors.VisitorCallBack
 import com.ezmanagement.society.Visitors.VisitorCheckInPresenter
 import com.ezmanagement.society.databinding.ActivityAddVisitorDetailsBinding
 import com.ezmanagement.society.sharedPreference.SharedPref
 import com.ezmanagement.society.utils.Utils
 import java.io.File
+import java.time.LocalDateTime
 import java.time.ZonedDateTime
 
 
-class AddVisitorDetails : AppCompatActivity(), View.OnClickListener,
+class AddVisitorDetails : BaseActivity(),
+    View.OnClickListener,AddVisitorContract.View,
     VisitorCallBack.RegisterVisitorCallBack, VisitorCallBack.VisitorCheckInCallBack {
     private lateinit var binding: ActivityAddVisitorDetailsBinding
     var sharedPref: SharedPref? = null
@@ -37,7 +38,8 @@ class AddVisitorDetails : AppCompatActivity(), View.OnClickListener,
     var visitorDetailsPresenter: VisitorCheckInPresenter? = null
     private val CAMERA_PERMISSION_REQUEST_CODE = 100
     private val REQUEST_IMAGE_CAPTURE = 101
-    var file: File?=null
+    var file: File? = null
+    var visitorType: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAddVisitorDetailsBinding.inflate(layoutInflater)
@@ -46,11 +48,12 @@ class AddVisitorDetails : AppCompatActivity(), View.OnClickListener,
         if (supportActionBar != null) {
             supportActionBar!!.hide()
         }
-        presenter = AddVisitorDetailsPresenter(lifecycleScope)
+        presenter = AddVisitorDetailsPresenter(lifecycleScope,this)
         visitorDetailsPresenter = VisitorCheckInPresenter(lifecycleScope)
 
         visitorModel = intent.getParcelableExtra<VisitorModel>(AppConstants.REGISTERED_VISITOR)
         val mobNumber = intent.getStringExtra(AppConstants.CONTACT_NO)
+        visitorType = intent.getStringExtra(AppConstants.VISITORTYPE)
         if (visitorModel != null) {
             binding.visitorNameTextInputLayoutEditText.setText(visitorModel?.name)
             binding.visitorMobileTextInputLayoutEditText.setText(visitorModel?.contact_no)
@@ -72,46 +75,61 @@ class AddVisitorDetails : AppCompatActivity(), View.OnClickListener,
         when (p0?.id) {
 
             R.id.submitVisitorButton -> {
-                val currentDateTime = ZonedDateTime.now()
-                val checkInTime = currentDateTime.format(AppConstants.formatter)
+                if(!validatedetails()) return
+                val currentDateTime = LocalDateTime.now()
+
                 val jwtToken = sharedPref!!.getUserData(
-                    AppConstants.JWTTOKEN,
-                    String::class.java,
-                    ""
+                    AppConstants.JWTTOKEN, String::class.java, ""
                 )
                 val guardId = sharedPref!!.getUserData(
-                    AppConstants.GUARDID,
-                    String::class.java,
-                    ""
+                    AppConstants.GUARDID, String::class.java, ""
                 )
                 val societyId = sharedPref!!.getUserData(
-                    AppConstants.SOCIETY_ID,
-                    String::class.java,
-                    ""
+                    AppConstants.SOCIETY_ID, String::class.java, ""
                 )
-                if (visitorModel?.id != null) {
-                    visitorDetailsPresenter?.visitorCheckIn(
-                        jwtToken,
-                        checkInTime,
-                        guardId = visitorModel?.guard_id.toString(),
-                        binding.personToMeetLayoutEditText.text.toString(),
-                        visitorModel?.society_id.toString(),
-                        true,
-                        visitorModel?.id.toString(),
-                        this@AddVisitorDetails
-                    )
+                if (visitorType.equals(AppConstants.NEWVISITOR)) {
+                    if(file!=null) {
+                        visitorType?.let {
+                            visitorDetailsPresenter?.visitorCheckIn(
+                                jwtToken,
+                                visitorname = binding.visitorNameTextInputLayoutEditText.text.toString(),
+                                visitorType = it,
+                                contact_no = binding.visitorMobileTextInputLayoutEditText.text.toString(),
+                                check_in = currentDateTime.toString(),
+                                guardId = guardId,
+                                flat_no = binding.personToMeetLayoutEditText.text.toString(),
+                                societyId = societyId,
+                                false,
+                                image =   "public/society/"+societyId+"/visitor/"+file!!.name,
+                                this@AddVisitorDetails
+                            )
+                        }
+                    }else{
+                        Toast.makeText(this,"Please Add Image",Toast.LENGTH_SHORT).show()
+                    }
 
                 } else {
-                    presenter?.registervisitor(
-                        jwtToken,
-                        binding.visitorMobileTextInputLayoutEditText.text.toString(),
-                        guardId,
-                        checkInTime,
-                        binding.visitorNameTextInputLayoutEditText.text.toString(),
-                        societyId,
-                        false,"Image Path",
-                        this@AddVisitorDetails
-                    )
+                    visitorModel?.let {
+                        visitorType?.let { it1 ->
+                            visitorModel!!.contact_no?.let { it2 ->
+                                presenter?.visitorRecheckIn(
+                                    jwtToken,
+                                    it1,
+                                    it.id.toString(),
+                                    currentDateTime.toString(),
+                                    binding.personToMeetLayoutEditText.text.toString(),
+                                    guardId,
+                                    "public/society/"+societyId+"/visitor/"+file!!.name,
+                                    visitorModel?.last_visited_at.toString(),
+                                    binding.visitorNameTextInputLayoutEditText.text.toString(),
+                                    false.toString(),
+                                    societyId,
+                                    it2,
+                                    this@AddVisitorDetails
+                                )
+                            }
+                        }
+                    }
                 }
 
             }
@@ -145,9 +163,6 @@ class AddVisitorDetails : AppCompatActivity(), View.OnClickListener,
 
                 }
             }
-
-
-
         }
     }
     override fun onRequestPermissionsResult(requestCode: Int,
@@ -166,41 +181,76 @@ class AddVisitorDetails : AppCompatActivity(), View.OnClickListener,
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    override fun visiterRegisterSuccessfully(registerVisitor: RegisterVisitorMutation.Insert_society_visitors_one) {
-        val currentDateTime = ZonedDateTime.now()
-        val checkIn = currentDateTime.format(AppConstants.formatter)
-        val jwtToken = sharedPref!!.getUserData(
-            AppConstants.JWTTOKEN,
-            String::class.java,
-            ""
-        )
-        file?.let { presenter?.uploadImage(it,registerVisitor.society_id.toString(),registerVisitor.id.toString()) }
-
-        visitorDetailsPresenter?.visitorCheckIn(
-            jwtToken,
-            checkIn,
-            guardId = registerVisitor.guard_id.toString(),
-            binding.personToMeetLayoutEditText.text.toString(),
-            registerVisitor.society_id.toString(),
-            true,
-            registerVisitor.id.toString(),
-            this@AddVisitorDetails
-        )
-
-    }
-
-    override fun visiterCheckInSuccessfully(addVisitorCheckinMutation: AddVisitorCheckinMutation.Insert_society_visitors_checkin_one) {
-        Toast.makeText(this, "Visitor Check In SuccessFully", Toast.LENGTH_SHORT).show()
-        startActivity(Intent(this, MainActivity::class.java))
+    override fun visiterRegisterSuccessfully(visitorId: String, societyId: String) {
+        val currentDateTime = LocalDateTime.now()
+        if (file != null) {
+            file?.let { presenter?.uploadImage(it, societyId) }
+        } else {
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
+        }
     }
 
     override fun onError() {
-
+        TODO("Not yet implemented")
     }
 
     override fun onFailure(message: String) {
-
+        TODO("Not yet implemented")
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
+    override fun visiterCheckInSuccessfully(message: String, societyId: String) {
+        Toast.makeText(this,"Visitor Check-in Successfully",Toast.LENGTH_SHORT).show()
+            val currentDateTime = LocalDateTime.now()
+        if (file != null) {
+            file?.let { presenter?.uploadImage(it, societyId) }
+        } else {
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
+        }
+    }
+
+
+
+    override fun imageuploadfailed() {
+
+        startActivity(Intent(this, MainActivity::class.java))
+        finish()
+    }
+
+    override fun imageuploadSuccessfully() {
+        startActivity(Intent(this, MainActivity::class.java))
+        finish()
+    }
+
+    override fun showToast(message: String) {
+        TODO("Not yet implemented")
+    }
+
+    override fun showAlert(message: String) {
+        TODO("Not yet implemented")
+    }
+
+    override fun showProgressDialog(resId: Int) {
+        TODO("Not yet implemented")
+    }
+
+    override fun showProgressDialog() {
+        TODO("Not yet implemented")
+    }
+
+    override fun dismissProgressDialog() {
+        TODO("Not yet implemented")
+    }
+
+    fun validatedetails():Boolean{
+        if(binding.visitorMobileTextInputLayoutEditText.text.isNullOrEmpty() || binding.visitorNameTextInputLayoutEditText.text.isNullOrEmpty()){
+      Toast.makeText(this,"Please Fill required details",Toast.LENGTH_SHORT).show()
+            return false
+        }
+        return  true
+
+    }
 
 }

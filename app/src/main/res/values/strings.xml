@@ -12,4 +12,8 @@
     <string name="visitor_details">Visitor Details</string>
     <string name="otp">OTP</string>
     <string name="add_notes">Add Notes</string>
+    <string name="number">1234567890</string>
+    <string name="alphabet_number">abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 </string>
+    <string name="alphabet_space">abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ</string>
+    <string name="alphabet">abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ</string>
 </resources>
