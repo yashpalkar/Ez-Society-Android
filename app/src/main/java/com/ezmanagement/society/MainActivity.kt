@@ -1,19 +1,24 @@
 package com.ezmanagement.society
 
+import android.app.Activity
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.view.View
 import android.view.View.OnClickListener
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import com.ezmanagement.society.RoundUp.RoundUpActivity
 import com.ezmanagement.society.Visitors.AddVisitor
 import com.ezmanagement.society.Visitors.CheckedInVisitorList.CheckedInVisitorActivity
+import com.ezmanagement.society.common.dialog.DialogListener
+import com.ezmanagement.society.common.dialog.DialogUtils
 import com.ezmanagement.society.databinding.ActivityMainBinding
 import com.ezmanagement.society.fragment.HomeFragment
 import com.ezmanagement.society.fragment.ProfileFragment
@@ -22,7 +27,7 @@ import com.ezmanagement.society.utils.RefreshTokenCallBack
 import com.ezmanagement.society.utils.RefreshTokenClass
 import com.google.android.material.navigation.NavigationView
 
-class MainActivity : AppCompatActivity(), RefreshTokenCallBack, OnClickListener {
+class MainActivity : BaseActivity(), RefreshTokenCallBack, OnClickListener {
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var actionBarToggle: ActionBarDrawerToggle
     private lateinit var navView: NavigationView
@@ -40,7 +45,7 @@ class MainActivity : AppCompatActivity(), RefreshTokenCallBack, OnClickListener 
         binding.roundUpRelativeLayout.setOnClickListener(this)
         // Pass the ActionBarToggle action into the drawerListener
         actionBarToggle = ActionBarDrawerToggle(this, drawerLayout, 0, 0)
-        drawerLayout.addDrawerListener(actionBarToggle)
+
 
         // Display the hamburger icon to launch the drawer
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -48,7 +53,10 @@ class MainActivity : AppCompatActivity(), RefreshTokenCallBack, OnClickListener 
         // Call syncState() on the action bar so it'll automatically change to the back button when the drawer layout is open
         actionBarToggle.syncState()
 
-
+        actionBarToggle.toolbarNavigationClickListener = OnClickListener {
+            drawerLayout.openDrawer(GravityCompat.START)
+        }
+        drawerLayout.addDrawerListener(actionBarToggle)
         // Call findViewById on the NavigationView
         navView = findViewById(R.id.navView)
 
@@ -68,6 +76,23 @@ class MainActivity : AppCompatActivity(), RefreshTokenCallBack, OnClickListener 
                 R.id.nav_settings -> {
                     changeFragment(2)
                     Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show()
+                    true
+                }
+                R.id.nav_logout -> {
+                    drawerLayout.closeDrawer(navView)
+                    DialogUtils.ShowAlert(this,"Alert","Do you want to logout",AppConstants.CONFIRM,AppConstants.CANCEL,object :DialogListener{
+                        override fun onPositiveClicked() {
+                            sharedPref!!.clearedSharedPref()
+                            var intent=Intent(applicationContext,LoginActivity::class.java)
+                            gotoActivity(intent,true)
+                        }
+
+                        override fun onNegativeClicked() {
+
+                        }
+
+                    })
+
                     true
                 }
                 else -> {

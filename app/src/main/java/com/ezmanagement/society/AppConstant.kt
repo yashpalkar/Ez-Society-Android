@@ -23,12 +23,13 @@ object AppConstants {
     const val UPADTE_AT = "updated_at"
     const val JWTTOKEN = "jwt_token"
     const val REGISTERED_VISITOR = "registerd_visitor"
-    @RequiresApi(Build.VERSION_CODES.O)
-    val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX")
     val RECHECKIN="re_check_in"
     val NEWVISITOR="new_visitor"
     val VISITORTYPE="visitor_type"
     val BASE_URL="https://auth.society.ezmanagement.in"
+    val OKAY="OKAY"
+    val CANCEL="Cancel"
+    val CONFIRM="Confirm"
 
 
 

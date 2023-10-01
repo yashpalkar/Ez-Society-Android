@@ -74,12 +74,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/login_joinup_selected_whiterounded"
-                    android:paddingHorizontal="@dimen/_10sdp"
-                    android:paddingVertical="@dimen/_5sdp"
+                    android:paddingHorizontal="@dimen/_12sdp"
+                    android:paddingVertical="@dimen/_7sdp"
                     android:text="VISTITOR DETAILS"
                     android:fontFamily="@font/uber_move_medium"
                     android:textColor="@color/black1"
-                    android:textSize="@dimen/_12sdp"
+                    android:textSize="@dimen/_8sdp"
                     android:textStyle="bold" />
 
             </RelativeLayout>
@@ -176,6 +176,8 @@
                 android:backgroundTint="@color/black1"
                 android:paddingVertical="@dimen/_10sdp"
                 android:text="@string/submit"
+
+android:textColor="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
 
