@@ -33,8 +33,8 @@ query GetVisitorCheckIn($_eq: uuid!) {
   }
 }
 
-query VisitorListBySocietyId($_eq: uuid!) {
-  society_visitors_checkin(where: {society_id: {_eq: $_eq}}) {
+query VisitorListBySocietyId($limit: Int!, $offset: Int!, $_eq: uuid!) {
+  society_visitors_checkin(where: {society_id: {_eq: $_eq}}, limit: $limit, offset: $offset,order_by: {check_in: desc}) {
     attended_time
     check_in
     check_out

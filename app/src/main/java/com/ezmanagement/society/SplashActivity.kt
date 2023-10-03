@@ -31,19 +31,19 @@ class SplashActivity : AppCompatActivity(), RefreshTokenCallBack {
 
         }else{
             startActivity(Intent(this@SplashActivity, LoginActivity::class.java))
-            finish()
+            this.finish()
         }
 
     }
 
     override fun onSucess() {
         startActivity(Intent(this@SplashActivity, MainActivity::class.java))
-        finish()
+        this.finish()
     }
 
     override fun onError() {
         startActivity(Intent(this@SplashActivity, LoginActivity::class.java))
-        finish()
+        this.finish()
     }
 
     override fun onRefreshTokenExpired(errorMessage: String) {

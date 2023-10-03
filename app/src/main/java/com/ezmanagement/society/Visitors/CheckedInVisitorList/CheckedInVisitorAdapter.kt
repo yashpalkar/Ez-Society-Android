@@ -7,6 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.ezmanagement.society.BuildConfig
+import com.ezmanagement.society.R
 import com.ezmanagement.society.VisitorListBySocietyIdQuery
 import com.ezmanagement.society.databinding.CheckedinVisitorCardviewBinding
 import java.time.LocalDateTime
@@ -25,6 +28,14 @@ class CheckedInVisitorAdapter (
                 val checkinDateTime: LocalDateTime = LocalDateTime.parse(
                     visitor.check_in.toString(), DateTimeFormatter.ISO_DATE_TIME
                 )
+                binding.visitorImageview?.let {
+                    Glide.with(context)
+                        .load(BuildConfig.MINIO_URL+visitor.society_visitors_checkin_society_visitor.image)
+                        .placeholder(R.drawable.profile_avatar)
+                        .error(R.drawable.profile_avatar)
+                        .fitCenter()
+                        .into(it)
+                }
                 binding.checkinTimeValueTextView.text =
                     checkinDateTime.dayOfMonth.toString() + " " + checkinDateTime.month.toString()
                         .substring(
@@ -42,6 +53,8 @@ class CheckedInVisitorAdapter (
                             .substring(
                                 0, 3
                             ) + " . " + checkoutDateTime.hour + ":" + checkoutDateTime.minute
+binding.attendedTimeValueTextView.visibility=View.VISIBLE
+                    binding.attendedTimeValueTextView.text=visitor.attended_time.toString()
                 } else {
                     binding.checkoutTimeTitle.visibility= View.GONE
                     binding.checkoutTimeValueTextView.visibility= View.GONE

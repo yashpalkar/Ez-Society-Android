@@ -8,11 +8,13 @@ interface CheckedInVisitorContract {
         fun showItems(checkinVisitorList:List<VisitorListBySocietyIdQuery.Society_visitors_checkin>?)
         fun showError(message: String?)
         fun updateVisitorList()
+        fun hideProgressbar()
+        fun showProgressbar()
     }
 
     interface Presenter {
         fun loadVisitorItems(
-            societyid: String, jwttoken: String
+            societyid: String, jwttoken: String, offset: Int,limit:Int
         )
 
         fun updatecheckVisitor(

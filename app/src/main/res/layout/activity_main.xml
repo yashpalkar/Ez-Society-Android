@@ -17,7 +17,8 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/_70sdp"
             android:layout_marginHorizontal="@dimen/_20sdp"
-            android:layout_marginVertical="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_30sdp"
+            android:layout_marginBottom="@dimen/_20sdp"
             android:background="@color/grey">
 
             <TextView
@@ -28,7 +29,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
                 android:gravity="center"
-                android:text="Visitor IN OUT"
+                android:text="Visitor In-Out"
                 android:textColor="#555555"
                 android:textSize="@dimen/_16sdp"
                 android:textStyle="bold"

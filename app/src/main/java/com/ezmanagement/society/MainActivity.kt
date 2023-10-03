@@ -65,12 +65,11 @@ class MainActivity : BaseActivity(), RefreshTokenCallBack, OnClickListener {
             when (menuItem.itemId) {
                 R.id.nav_home -> {
                     changeFragment(0)
-                    Toast.makeText(this, "My Profile", Toast.LENGTH_SHORT).show()
                     true
                 }
                 R.id.nav_profile -> {
-                    changeFragment(1)
-                    Toast.makeText(this, "People", Toast.LENGTH_SHORT).show()
+                    startActivity(Intent(this,ProfileActivity::class.java))
+
                     true
                 }
                 R.id.nav_settings -> {

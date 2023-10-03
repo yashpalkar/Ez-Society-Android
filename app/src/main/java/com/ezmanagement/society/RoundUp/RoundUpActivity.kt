@@ -19,6 +19,7 @@ import com.ezmanagement.society.AppConstants
 import com.ezmanagement.society.GetRoundUpIdQuery
 import com.ezmanagement.society.MainActivity
 import com.ezmanagement.society.RoundUp.Dialog.RoundupDialog
+import com.ezmanagement.society.common.LogUtlis
 import com.ezmanagement.society.databinding.ActivityRoundUpBinding
 import com.ezmanagement.society.sharedPreference.SharedPref
 import com.ezmanagement.society.utils.Utils
@@ -81,8 +82,10 @@ class RoundUpActivity : AppCompatActivity(), RoundUpContract.View {
             runOnUiThread {
 
                 try {
+
                     var obj = JSONObject(it.text.toString())
                     var roundupid = obj.get("location")
+                    LogUtlis.info("roundupid",roundupid.toString());
                     jwtToken?.let { it1 -> presenter.isQRValid(roundupid.toString(), it1) }
                     codeScanner.stopPreview()
                 } catch (e: JSONException) {
@@ -168,7 +171,7 @@ class RoundUpActivity : AppCompatActivity(), RoundUpContract.View {
 
     override fun validQr(societyRoundup: GetRoundUpIdQuery.Society_roundups_by_pk) {
         this.societyRoundup = societyRoundup
-        if (allPermissionsGranted()) {
+        if (!allPermissionsGranted()) {
             // Permission is not granted, request it
             ActivityCompat.requestPermissions(
                 this@RoundUpActivity,
@@ -176,7 +179,6 @@ class RoundUpActivity : AppCompatActivity(), RoundUpContract.View {
                 CAMERA_PERMISSION_REQUEST_CODE
             )
         } else {
-            // Permission is already granted, open the camera
 
             openCamera()
         }

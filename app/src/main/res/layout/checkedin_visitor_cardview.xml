@@ -1,38 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools">
+
+    android:layout_height="wrap_content">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/visitorImageview"
         android:layout_width="0dp"
         android:layout_height="@dimen/_62sdp"
         android:layout_marginVertical="@dimen/_10sdp"
-        app:layout_constraintWidth_percent=".2"
         android:src="@drawable/profile_avatar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent=".2" />
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
+        android:background="@color/grey"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:background="@color/grey"/>
+        app:layout_constraintStart_toStartOf="parent" />
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        app:layout_constraintWidth_percent=".75"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/visitorImageview"
         android:layout_marginHorizontal="@dimen/_7sdp"
         android:paddingVertical="@dimen/_7sdp"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/visitorImageview"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent=".75">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/visitorNameTextView"
@@ -40,33 +42,34 @@
             android:layout_height="wrap_content"
             android:layout_marginVertical="@dimen/_5sdp"
             android:fontFamily="@font/uber_move_medium"
-            tools:text="User Name"
             android:textColor="@color/black"
             android:textSize="@dimen/_14sdp"
-
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="User Name" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/mobileNumberTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/uber_move_medium"
-            tools:text="9221414614"
-            android:textSize="@dimen/_12sdp"
             android:layout_marginVertical="@dimen/_5sdp"
+            android:fontFamily="@font/uber_move_medium"
             android:textAlignment="center"
+            android:textSize="@dimen/_12sdp"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/visitorNameTextView"
 
-            app:layout_constraintTop_toBottomOf="@id/visitorNameTextView" />
+            tools:text="9221414614" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/checkin_time_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Check In-"
-            android:layout_marginVertical="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_5sdp"
             android:fontFamily="@font/uber_move_medium"
+            android:text="Check In-"
+
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/flatno_titileTextView" />
 
@@ -75,9 +78,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_5sdp"
+            android:layout_marginVertical="@dimen/_5sdp"
             android:fontFamily="@font/uber_move_medium"
             android:text="Check-in-"
-            android:layout_marginVertical="@dimen/_5sdp"
             app:layout_constraintStart_toEndOf="@id/checkin_time_title"
             app:layout_constraintTop_toBottomOf="@id/flatno_valueTextView" />
 
@@ -86,10 +89,11 @@
             android:id="@+id/checkout_time_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/_5sdp"
             android:fontFamily="@font/uber_move_medium"
             android:text="Check-out-"
-            android:layout_marginVertical="@dimen/_5sdp"
-          app:layout_constraintEnd_toStartOf="@+id/checkout_time_valueTextView"
+            android:layout_marginEnd="5dp"
+            app:layout_constraintEnd_toStartOf="@+id/checkout_time_valueTextView"
             app:layout_constraintTop_toBottomOf="@id/attended_time_title" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -97,19 +101,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_5sdp"
+            android:layout_marginVertical="@dimen/_5sdp"
             android:fontFamily="@font/uber_move_medium"
             android:text="Check In-"
-            android:layout_marginVertical="@dimen/_5sdp"
-           app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/attended_time_valueTextView" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/flatno_titileTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5sdp"
             android:fontFamily="@font/uber_move_medium"
             android:text="Flat No-"
-            android:layout_marginTop="@dimen/_5sdp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/mobileNumberTextView" />
 
@@ -118,20 +122,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_5sdp"
             android:fontFamily="@font/uber_move_medium"
             android:text="06"
-            android:layout_marginTop="@dimen/_5sdp"
             app:layout_constraintStart_toEndOf="@id/flatno_titileTextView"
             app:layout_constraintTop_toBottomOf="@id/mobileNumberTextView" />
+
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/attended_time_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5sdp"
             android:fontFamily="@font/uber_move_medium"
             android:text="Attended Time"
-            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginEnd="5dp"
             android:visibility="visible"
-            app:layout_constraintEnd_toStartOf="@+id/checkout_time_valueTextView"
+            app:layout_constraintEnd_toStartOf="@+id/attended_time_valueTextView"
             app:layout_constraintTop_toBottomOf="@id/mobileNumberTextView" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -140,23 +146,25 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_5sdp"
             android:fontFamily="@font/uber_move_medium"
-            android:text="Check In-"
-            android:layout_marginTop="@dimen/_5sdp"
+            android:text="Time"
+            android:layout_marginLeft="@dimen/_5sdp"
             android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="@+id/attended_time_title"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/mobileNumberTextView" />
+            app:layout_constraintTop_toTopOf="@id/attended_time_title" />
 
         <LinearLayout
             android:id="@+id/checkoutLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/button_rounded_green"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginRight="@dimen/_10sdp"
-android:visibility="visible"
-            android:paddingHorizontal="10dp">
+            android:background="@drawable/button_rounded_green"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="@dimen/_5sdp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <TextView
                 android:id="@+id/checkouttext"
@@ -165,6 +173,8 @@ android:visibility="visible"
                 android:layout_gravity="center_vertical"
                 android:fontFamily="@font/uber_move_medium"
                 android:text="Out"
+                android:layout_marginEnd="@dimen/_5sdp"
+                android:layout_marginStart="3dp"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_10sdp" />
 
@@ -172,13 +182,11 @@ android:visibility="visible"
                 android:id="@+id/checkoutarrow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+
                 android:src="@drawable/ic_baseline_arrow_forward_24" />
 
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

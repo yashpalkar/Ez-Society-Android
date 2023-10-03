@@ -25,4 +25,6 @@
 
         <!-- Add more attributes as needed -->
     </style>
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>
