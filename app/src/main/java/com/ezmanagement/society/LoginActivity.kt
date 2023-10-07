@@ -22,7 +22,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 
 
-class LoginActivity : AppCompatActivity(), OnClickListener, ResponseCallBack {
+class LoginActivity : BaseActivity(), OnClickListener, ResponseCallBack {
     var sharedPref: SharedPref? = null
     var editor: SharedPreferences.Editor? = null
     var retrofit: Retrofit? = null
@@ -38,6 +38,7 @@ class LoginActivity : AppCompatActivity(), OnClickListener, ResponseCallBack {
         }
         retrofit = RetrofitService.getInstance()
         binding.loginButton.setOnClickListener(this)
+        setUsernamePassword()
     }
 
 
@@ -99,6 +100,7 @@ class LoginActivity : AppCompatActivity(), OnClickListener, ResponseCallBack {
                                 String::class.java,
                                 jwttoken)
                             var userPresenter=UserPresenter(lifecycleScope)
+                            rememberCred()
                             user_id?.let { userPresenter.getProfileData(it,jwttoken,this@LoginActivity) }
 //                            getProfileData(user_id!!, jwttoken)
 
@@ -124,8 +126,9 @@ class LoginActivity : AppCompatActivity(), OnClickListener, ResponseCallBack {
 
     override fun onSuccess() {
 
- val intent = Intent(this@LoginActivity, MainActivity::class.java)
+ var intent = Intent(this@LoginActivity, MainActivity::class.java)
         startActivity(intent)
+        this.finish()
 
     }
 
@@ -135,6 +138,36 @@ class LoginActivity : AppCompatActivity(), OnClickListener, ResponseCallBack {
 
     override fun onFailure(message: String) {
         Log.d("Throwable",message)
+    }
+
+   fun setUsernamePassword(){
+       var username=sharedPref?.getUserData(
+           AppConstants.USERNAME,
+           String::class.java,
+           "")
+
+       var password=sharedPref?.getUserData(
+           AppConstants.PASSWORD,
+           String::class.java,
+           ""
+       )
+         binding.emaileditText.setText(username)
+         binding.passwordeditText.setText(password)
+    }
+
+    fun rememberCred(){
+        if(binding.rememberCheckBox.isChecked) {
+            sharedPref?.saveUserData(
+                AppConstants.USERNAME,
+                String::class.java,
+                binding.emaileditText.text.toString()
+            )
+            sharedPref?.saveUserData(
+                AppConstants.PASSWORD,
+                String::class.java,
+                binding.passwordeditText.text.toString()
+            )
+        }
     }
 
 }

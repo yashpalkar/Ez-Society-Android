@@ -7,8 +7,10 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.View.OnClickListener
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatAutoCompleteTextView
 import com.ezmanagement.society.AppConstants
 import com.ezmanagement.society.CheckVisitorRegisterQuery
 import com.ezmanagement.society.R
@@ -25,6 +27,7 @@ class AddVisitor : AppCompatActivity(),OnClickListener,VisitorCallBack.CheckVisi
     lateinit  var visitorPresenter:VisitorPresenter
     var sharedPref: SharedPref? = null
     var editor: SharedPreferences.Editor? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAddVisitorBinding.inflate(layoutInflater)
@@ -32,6 +35,19 @@ class AddVisitor : AppCompatActivity(),OnClickListener,VisitorCallBack.CheckVisi
         binding.submitNumberBtn.setOnClickListener(this)
         sharedPref = SharedPref(this);
          visitorPresenter=VisitorPresenter(lifecycleScope)
+       var contact_no = intent.getStringExtra(AppConstants.CONTACT_NO)
+        if(contact_no?.isNotEmpty() == true){
+            binding.mobileNumberTextInputLayoutEditText.setText(contact_no)
+        }
+
+        val items = arrayOf("+91")
+
+        val adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, items)
+
+        binding.codeTextView.setAdapter(adapter)
+        if (items.isNotEmpty()) {
+            binding.codeTextView.setText(items[0], false)
+        }
     }
     override fun onClick(p0: View?) {
         when (p0?.id) {
@@ -100,6 +116,8 @@ class AddVisitor : AppCompatActivity(),OnClickListener,VisitorCallBack.CheckVisi
         intent.putExtra(AppConstants.VISITORTYPE,checkVisitorNumberMutation.visitor_type)
         intent.putExtra(AppConstants.REGISTERED_VISITOR,visitorModel)
         startActivity(intent)
+        this.finish()
+
     }
 
     override fun isNewVisitor(contactNumber: String, visitor_type: String) {
@@ -107,6 +125,7 @@ class AddVisitor : AppCompatActivity(),OnClickListener,VisitorCallBack.CheckVisi
         intent.putExtra(AppConstants.CONTACT_NO,contactNumber)
         intent.putExtra(AppConstants.VISITORTYPE,visitor_type)
         startActivity(intent)
+        this.finish()
     }
 
 

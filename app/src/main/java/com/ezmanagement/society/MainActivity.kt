@@ -69,7 +69,6 @@ class MainActivity : BaseActivity(), RefreshTokenCallBack, OnClickListener {
                 }
                 R.id.nav_profile -> {
                     startActivity(Intent(this,ProfileActivity::class.java))
-
                     true
                 }
                 R.id.nav_settings -> {
@@ -78,11 +77,11 @@ class MainActivity : BaseActivity(), RefreshTokenCallBack, OnClickListener {
                     true
                 }
                 R.id.nav_logout -> {
-                    drawerLayout.closeDrawer(navView)
+//                    drawerLayout.closeDrawer(navView)
                     DialogUtils.ShowAlert(this,"Alert","Do you want to logout",AppConstants.CONFIRM,AppConstants.CANCEL,object :DialogListener{
                         override fun onPositiveClicked() {
-                            sharedPref!!.clearedSharedPref()
-                            var intent=Intent(applicationContext,LoginActivity::class.java)
+                            sharedPref!!.logout()
+                            var intent=Intent(this@MainActivity,LoginActivity::class.java)
                             gotoActivity(intent,true)
                         }
 
@@ -92,7 +91,7 @@ class MainActivity : BaseActivity(), RefreshTokenCallBack, OnClickListener {
 
                     })
 
-                    true
+                   false
                 }
                 else -> {
                     false
@@ -145,6 +144,7 @@ class MainActivity : BaseActivity(), RefreshTokenCallBack, OnClickListener {
         Log.d("ononError", "onRefreshTokenExpired")
         var intent: Intent = Intent(this, LoginActivity::class.java)
         startActivity(intent)
+        this.finish()
     }
 
     override fun onRefreshTokenExpired(errorMessage: String) {
@@ -165,5 +165,9 @@ class MainActivity : BaseActivity(), RefreshTokenCallBack, OnClickListener {
                 startActivity(Intent(this,RoundUpActivity::class.java))
             }
         }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
     }
 }

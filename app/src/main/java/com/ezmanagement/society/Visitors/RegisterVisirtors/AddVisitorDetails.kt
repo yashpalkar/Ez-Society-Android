@@ -17,6 +17,7 @@ import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.ezmanagement.society.*
 import com.ezmanagement.society.Model.VisitorModel
+import com.ezmanagement.society.Visitors.AddVisitor
 import com.ezmanagement.society.Visitors.VisitorCallBack
 import com.ezmanagement.society.Visitors.VisitorCheckInPresenter
 import com.ezmanagement.society.databinding.ActivityAddVisitorDetailsBinding
@@ -178,7 +179,7 @@ override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) 
         if (imageBitmap != null) {
             file = Utils.saveBitmapToExternalFilesDir(this, imageBitmap)
             if (file != null) {
-
+binding.visitiorIcon.setImageBitmap(imageBitmap)
             }
         }
     }
@@ -273,5 +274,13 @@ fun validatedetails(): Boolean {
     return true
 
 }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        var intent=Intent(this@AddVisitorDetails, AddVisitor::class.java)
+        intent.putExtra(AppConstants.CONTACT_NO,binding.visitorMobileTextInputLayoutEditText.text.toString())
+        startActivity(intent)
+        this.finish()
+    }
 
 }

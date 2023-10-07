@@ -80,7 +80,7 @@
             android:layout_marginHorizontal="@dimen/_5sdp"
             android:layout_marginVertical="@dimen/_5sdp"
             android:fontFamily="@font/uber_move_medium"
-            android:text="Check-in-"
+            tools:text="Time"
             app:layout_constraintStart_toEndOf="@id/checkin_time_title"
             app:layout_constraintTop_toBottomOf="@id/flatno_valueTextView" />
 
@@ -103,7 +103,7 @@
             android:layout_marginHorizontal="@dimen/_5sdp"
             android:layout_marginVertical="@dimen/_5sdp"
             android:fontFamily="@font/uber_move_medium"
-            android:text="Check In-"
+            tools:text="Time"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/attended_time_valueTextView" />
 
@@ -134,7 +134,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_5sdp"
             android:fontFamily="@font/uber_move_medium"
-            android:text="Attended Time"
+            android:text="Att Time"
             android:layout_marginEnd="5dp"
             android:visibility="visible"
             app:layout_constraintEnd_toStartOf="@+id/attended_time_valueTextView"
@@ -146,7 +146,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_5sdp"
             android:fontFamily="@font/uber_move_medium"
-            android:text="Time"
+            tools:text="Time"
             android:layout_marginLeft="@dimen/_5sdp"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="@+id/attended_time_title"

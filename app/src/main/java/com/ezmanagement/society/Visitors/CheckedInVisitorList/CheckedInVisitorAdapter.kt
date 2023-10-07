@@ -36,6 +36,15 @@ class CheckedInVisitorAdapter (
                         .fitCenter()
                         .into(it)
                 }
+                if(visitor.flat_no?.isEmpty() == true) {
+                    binding.flatnoValueTextView.visibility = (View.GONE)
+                    binding.flatnoTitileTextView.visibility = (View.GONE)
+                } else{
+
+                        binding.flatnoValueTextView.visibility=(View.VISIBLE)
+                        binding.flatnoTitileTextView.visibility=(View.VISIBLE)
+                        binding.flatnoValueTextView.setText(visitor.flat_no.toString())
+                }
                 binding.checkinTimeValueTextView.text =
                     checkinDateTime.dayOfMonth.toString() + " " + checkinDateTime.month.toString()
                         .substring(

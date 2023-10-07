@@ -46,4 +46,15 @@ class SharedPref (var context:Context){
         editor!!.clear()
         editor!!.commit()
     }
+    fun logout(){
+        val loginToken = AppConstants.LOGIN_TOKEN
+        editor?.remove(loginToken)
+        val userId = AppConstants.USER_ID
+        editor?.remove(userId)
+        val jwtToken = AppConstants.JWTTOKEN
+        editor?.remove(jwtToken)
+        editor?.apply()
+
+
+    }
 }

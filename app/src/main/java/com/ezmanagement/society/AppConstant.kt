@@ -30,6 +30,8 @@ object AppConstants {
     val OKAY="OKAY"
     val CANCEL="Cancel"
     val CONFIRM="Confirm"
+    val USERNAME="username"
+    val PASSWORD="password"
 
 
 

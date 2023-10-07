@@ -3,7 +3,6 @@ package com.ezmanagement.society.Visitors.CheckedInVisitorList
 import android.os.Build
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.NestedScrollView
@@ -14,9 +13,9 @@ import com.ezmanagement.society.AppConstants
 import com.ezmanagement.society.VisitorListBySocietyIdQuery
 import com.ezmanagement.society.databinding.ActivityCheckedInVisitorBinding
 import com.ezmanagement.society.sharedPreference.SharedPref
+import java.time.Duration
 import java.time.LocalDateTime
-import java.time.ZoneId
-import java.time.ZonedDateTime
+import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import java.util.*
 
@@ -66,6 +65,7 @@ class CheckedInVisitorActivity : AppCompatActivity(), CheckedInVisitorContract.V
         binding.checkedInVisitorRecylerView.layoutManager = layoutManager
         binding.checkedInVisitorRecylerView.adapter = checkedInVisitorAdapter
 
+
         binding.idNestedSV.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
             // on scroll change we are checking when users scroll as bottom.
             if (scrollY == v.getChildAt(0).measuredHeight - v.measuredHeight) {
@@ -106,14 +106,24 @@ class CheckedInVisitorActivity : AppCompatActivity(), CheckedInVisitorContract.V
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onClickcheckOut(data: VisitorListBySocietyIdQuery.Society_visitors_checkin) {
 
-        val timeZone = ZoneId.of("Asia/Kolkata")
-        val currentTime = ZonedDateTime.now(timeZone)
-        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss z")
-        val dateTimeNow = currentTime.format(formatter)
+        val checkInFormat = DateTimeFormatter.ISO_OFFSET_DATE_TIME
+
+        val checkInTime: LocalTime = LocalTime.parse(data.check_in.toString(), checkInFormat)
+        val currentLocalTime = LocalTime.now()
+        val duration: Duration = Duration.between(checkInTime, currentLocalTime)
+
+        // Add the duration to the parsed LocalTime
+
+        // Add the duration to the parsed LocalTime
+        val newLocalTime: LocalTime = checkInTime.plus(duration)
+////        val timeZone = ZoneId.of("Asia/Kolkata")
+////        val currentTime = ZonedDateTime.now(timeZone)
+////        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss z")
+//        val dateTimeNow = currentTime.format(formatter)
         jwtToken?.let {
             societyId?.let { it1 ->
                 presenter.updatecheckVisitor(
-                    it1,data.id.toString(),LocalDateTime.now().toString(),dateTimeNow,
+                    it1,data.id.toString(),LocalDateTime.now().toString(),newLocalTime.toString(),
                     it
                 )
             }
