@@ -1,11 +1,13 @@
 package com.ezmanagement.society.Visitors.CheckedInVisitorList
 
+import com.ezmanagement.society.VisitorListBySocietyIdFilterQuery
 import com.ezmanagement.society.VisitorListBySocietyIdQuery
 import java.time.LocalDateTime
 
 interface CheckedInVisitorContract {
     interface View {
-        fun showItems(checkinVisitorList:List<VisitorListBySocietyIdQuery.Society_visitors_checkin>?)
+        fun showItems(checkinVisitorList:List<VisitorListBySocietyIdFilterQuery.Society_visitors_checkin>?)
+
         fun showError(message: String?)
         fun updateVisitorList()
         fun hideProgressbar()
@@ -15,6 +17,9 @@ interface CheckedInVisitorContract {
     interface Presenter {
         fun loadVisitorItems(
             societyid: String, jwttoken: String, offset: Int,limit:Int
+        )
+        fun loadVisitorbyFilter(
+            societyid: String, jwttoken: String, offset: Int,limit:Int,endDate:String,startDate:String
         )
 
         fun updatecheckVisitor(

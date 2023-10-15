@@ -62,6 +62,11 @@ class UserPresenter(private val lifecycleScope: LifecycleCoroutineScope,) {
                     String::class.java,
                     society_guards?.get(0)?.id!! as String
                 )
+                sharedPref?.saveUserData(
+                    AppConstants.DISPLAYNAME,
+                    String::class.java,
+                    society_guards?.get(0)?.society_guards_user?.display_name!! as String
+                )
 
                 loginActivity.onSuccess()
 

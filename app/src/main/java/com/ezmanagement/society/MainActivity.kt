@@ -8,6 +8,9 @@ import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.View.OnClickListener
+import android.widget.ImageButton
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -26,6 +29,8 @@ import com.ezmanagement.society.sharedPreference.SharedPref
 import com.ezmanagement.society.utils.RefreshTokenCallBack
 import com.ezmanagement.society.utils.RefreshTokenClass
 import com.google.android.material.navigation.NavigationView
+import java.text.SimpleDateFormat
+import java.util.*
 
 class MainActivity : BaseActivity(), RefreshTokenCallBack, OnClickListener {
     private lateinit var drawerLayout: DrawerLayout
@@ -40,23 +45,45 @@ class MainActivity : BaseActivity(), RefreshTokenCallBack, OnClickListener {
         setContentView(binding.root)
         sharedPref = SharedPref(this);
         drawerLayout = findViewById(R.id.drawerLayout)
+        if (getSupportActionBar() != null) {
+            getSupportActionBar()?.hide();
+        }
+        val dateTextView = findViewById<TextView>(R.id.dateTextView)
+        val menuButton = findViewById<ImageButton>(R.id.menuButton)
+        val profileImageView = findViewById<ImageView>(R.id.profileImageView)
+        val activityTitle = findViewById<TextView>(R.id.activityTitle)
+        val usernameTextView = findViewById<TextView>(R.id.username)
+        val username = sharedPref!!.getUserData(
+            AppConstants.DISPLAYNAME,
+            String::class.java,
+            "User"
+        )
+        activityTitle.setText("Sukhmani Niwas")
+        usernameTextView.setText("Welcome "+(username))
+
+
+        // Update the date in the TextView dynamically
+        val currentDate = SimpleDateFormat("MMMM dd, yyyy", Locale.getDefault()).format(Date())
+        dateTextView.text = currentDate
+
         binding.visitorRelativeLayout.setOnClickListener(this)
         binding.visitorListRelativeLayout.setOnClickListener(this)
         binding.roundUpRelativeLayout.setOnClickListener(this)
         // Pass the ActionBarToggle action into the drawerListener
-        actionBarToggle = ActionBarDrawerToggle(this, drawerLayout, 0, 0)
-
+//        actionBarToggle = ActionBarDrawerToggle(this, drawerLayout, 0, 0)
+        menuButton.setOnClickListener(this)
+        profileImageView.setOnClickListener(this)
 
         // Display the hamburger icon to launch the drawer
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         // Call syncState() on the action bar so it'll automatically change to the back button when the drawer layout is open
-        actionBarToggle.syncState()
-
-        actionBarToggle.toolbarNavigationClickListener = OnClickListener {
-            drawerLayout.openDrawer(GravityCompat.START)
-        }
-        drawerLayout.addDrawerListener(actionBarToggle)
+//        actionBarToggle.syncState()
+//
+//        actionBarToggle.toolbarNavigationClickListener = OnClickListener {
+//            drawerLayout.openDrawer(GravityCompat.START)
+//        }
+//        drawerLayout.addDrawerListener(actionBarToggle)
         // Call findViewById on the NavigationView
         navView = findViewById(R.id.navView)
 
@@ -149,7 +176,6 @@ class MainActivity : BaseActivity(), RefreshTokenCallBack, OnClickListener {
 
     override fun onRefreshTokenExpired(errorMessage: String) {
 //        startActivity(Intent(this,LoginActivity::class.java))
-
         Log.d("onRefreshTokenExpired", errorMessage)
     }
 
@@ -163,6 +189,12 @@ class MainActivity : BaseActivity(), RefreshTokenCallBack, OnClickListener {
             }
             R.id.roundUpRelativeLayout->{
                 startActivity(Intent(this,RoundUpActivity::class.java))
+            }
+            R.id.profileImageView->{
+                startActivity(Intent(this,ProfileActivity::class.java))
+            }
+            R.id.menuButton->{
+                drawerLayout.openDrawer(GravityCompat.START)
             }
         }
     }

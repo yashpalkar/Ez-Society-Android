@@ -1,0 +1,20 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@color/black" />
+    <stroke
+        android:width="0dp"
+        android:color="#E7E9EA" />
+    <corners
+        android:bottomLeftRadius="25dp"
+        android:bottomRightRadius="25dp" />
+
+    <!-- Add a wave-like pattern -->
+    <item>
+        <shape>
+            <solid android:color="@color/black" />
+            <size
+                android:width="200dp"
+                android:height="100dp" /> <!-- Adjust the width and height as needed -->
+            <corners android:radius="10dp" />
+        </shape>
+    </item>
+</shape>

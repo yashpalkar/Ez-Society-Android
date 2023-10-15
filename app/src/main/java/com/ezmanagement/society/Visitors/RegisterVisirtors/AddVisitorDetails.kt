@@ -24,7 +24,11 @@ import com.ezmanagement.society.databinding.ActivityAddVisitorDetailsBinding
 import com.ezmanagement.society.sharedPreference.SharedPref
 import com.ezmanagement.society.utils.Utils
 import java.io.File
+import java.time.Instant
 import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
 
 
 class AddVisitorDetails : BaseActivity(),
@@ -80,8 +84,14 @@ class AddVisitorDetails : BaseActivity(),
 
             R.id.submitVisitorButton -> {
                 if (!validatedetails()) return
-                val currentDateTime = LocalDateTime.now()
-
+//                val currentDateTime = LocalDateTime.now()
+//                val timeZone = ZoneId.of(getString(R.string.zone)) // Replace with the desired time zone
+//                val zonedDateTime = ZonedDateTime.now(timeZone)
+//                val currentTimeWithZone = zonedDateTime.toLocalDateTime()
+//                val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss z")
+                val currentUtcTime = Instant.now()
+                // Define your desired format
+//                val formattedTime = zonedDateTime.format(formatter)
                 val jwtToken = sharedPref!!.getUserData(
                     AppConstants.JWTTOKEN, String::class.java, ""
                 )
@@ -99,7 +109,7 @@ class AddVisitorDetails : BaseActivity(),
                                 visitorname = binding.visitorNameTextInputLayoutEditText.text.toString(),
                                 visitorType = it,
                                 contact_no = binding.visitorMobileTextInputLayoutEditText.text.toString(),
-                                check_in = currentDateTime.toString(),
+                                check_in = currentUtcTime.toString(),
                                 guardId = guardId,
                                 flat_no = binding.personToMeetLayoutEditText.text.toString(),
                                 societyId = societyId,
@@ -126,10 +136,10 @@ class AddVisitorDetails : BaseActivity(),
                                     jwtToken,
                                     it1,
                                     it.id.toString(),
-                                    currentDateTime.toString(),
+                                    currentUtcTime.toString(),
                                     binding.personToMeetLayoutEditText.text.toString(),
                                     guardId,
-                                   image,
+                                    image,
                                 visitorModel?.last_visited_at.toString(),
                                 binding.visitorNameTextInputLayoutEditText.text.toString(),
                                 false.toString(),

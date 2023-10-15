@@ -59,9 +59,35 @@ query VisitorListBySocietyId($limit: Int!, $offset: Int!, $_eq: uuid!) {
   }
 }
 
+query VisitorListBySocietyIdFilter($endDate: timestamptz!, $limit: Int!, $offset: Int!, $_gte: timestamptz!,$_eq: uuid!) {
+  society_visitors_checkin(limit: $limit, offset: $offset, where: {check_in: {_gte: $_gte, _lte: $endDate}, society_id: {_eq: $_eq}},order_by: {check_in: desc}) {
+    attended_time
+    check_in
+    check_out
+    flat_no
+    guard_id
+    id
+    is_allowed
+    society_id
+    visitor_id
+    society_visitors_checkin_society_visitor {
+      contact_no
+      image
+      name
+      verified
+      created_at
+      guard_id
+      id
+      last_visited_at
+      society_id
+      updated_at
+    }
+  }
+}
 
-mutation UpdateCheckVisitor($_eq: uuid!, $_eq1: uuid!, $attended_time: timetz!, $check_out: timestamptz!) {
-  update_society_visitors_checkin(where: {id: {_eq: $_eq1}, society_id: {_eq: $_eq}}, _set: {attended_time: $attended_time, check_out: $check_out}) {
+
+mutation UpdateCheckVisitor($_eq: uuid!, $_eq1: uuid!, $check_out: timestamptz!, $attended_time: interval!) {
+  update_society_visitors_checkin(where: {id: {_eq: $_eq1}, society_id: {_eq: $_eq}}, _set: {check_out: $check_out, attended_time: $attended_time}) {
     affected_rows
   }
 }
@@ -93,8 +119,32 @@ mutation NewVisitorCheckIN($visitor_data: VisitorDataInput!, $visitor_type: Stri
 
 
 
-
-
-
-
+query getSocietiesVisitors($limit: Int, $offset: Int, $_eq: uuid!, $_ilike: String!) {
+  society_visitors(limit: $limit, offset: $offset, where: {_or: [{name: {_ilike:  $_ilike}}, {contact_no: {_ilike:  $_ilike}}], society_id: {_eq: $_eq}}) {
+    id
+    name
+    contact_no
+    guard_id
+    image
+    last_visited_at
+    society_id
+    created_at
+    updated_at
+    verified
+    visitors_checkins {
+      id
+      check_in
+      check_out
+      flat_no
+      guard_id
+      attended_time
+      is_allowed
+    }
+  }
+  society_visitors_aggregate(limit: $limit, offset: $offset, where: {_or: {name: {_ilike: $_ilike}, contact_no: {_ilike: $_ilike}}, society_id: {_eq: $_eq}}) {
+    aggregate {
+      count
+    }
+  }
+}
 

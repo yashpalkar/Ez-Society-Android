@@ -16,4 +16,6 @@
     <string name="alphabet_number">abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 </string>
     <string name="alphabet_space">abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ</string>
     <string name="alphabet">abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ</string>
+    <string name="zone">Asia/Kolkata</string>
+    <string name="search_visitor">Search Visitor</string>
 </resources>

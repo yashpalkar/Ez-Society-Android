@@ -7,6 +7,9 @@ query GetSocietyGuardbyID($_eq: uuid!) {
     id
     society_id
     updated_at
+   society_guards_user {
+      display_name
+    }
   }
 }
 query CheckVisitorRegister($_eq: uuid!, $_eq1: String!) {

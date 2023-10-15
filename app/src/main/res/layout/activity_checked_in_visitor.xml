@@ -12,22 +12,75 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <androidx.appcompat.widget.SearchView
-            android:id="@+id/searchView"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.SearchView
+                android:id="@+id/searchView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:background="@drawable/searchview_bg"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:clickable="true"
+                android:focusable="true"
+                android:hint="@string/search_visitor"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_percent="0.5"
+                app:layout_scrollFlags="scroll|enterAlways" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_7sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_percent="0.4">
+
+                <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                    android:id="@+id/filterTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:digits="@string/number"
+                    android:focusable="false"
+                    android:hint="Filter"
+                    android:maxLength="9"
+                    android:maxLines="1"
+                    android:textAlignment="textStart"
+                    android:textColor="#555555" />
+
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/visitorFilterTtitle"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/uber_move_bold"
+            android:lineHeight="@dimen/_30sdp"
+            android:text="Todays Visitor"
+            android:layout_marginVertical="@dimen/_5sdp"
+            android:textColor="@color/black1"
+            android:textSize="@dimen/_14sdp"
             android:layout_marginHorizontal="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:layout_marginBottom="@dimen/_5sdp"
-            app:layout_scrollFlags="scroll|enterAlways"
-            android:background="@drawable/searchview_bg"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/searchView" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/checkedInVisitorRecylerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_10sdp"
-
             android:nestedScrollingEnabled="false"
             tools:listitem="@layout/checkedin_visitor_cardview" />
 

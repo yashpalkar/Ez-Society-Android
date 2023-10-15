@@ -19,6 +19,7 @@ object AppConstants {
     const val SOCIETY_ID = "society_id"
     const val ID = "id"
     const val GUARDID = "Guard_id"
+    const val DISPLAYNAME = "Display_Name"
     const val USER_ID = "user_id"
     const val UPADTE_AT = "updated_at"
     const val JWTTOKEN = "jwt_token"

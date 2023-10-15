@@ -7,6 +7,7 @@ import androidx.annotation.RequiresApi
 import androidx.lifecycle.LifecycleCoroutineScope
 import com.ezmanagement.society.Retrofit.ApiClient
 import com.ezmanagement.society.UpdateCheckVisitorMutation
+import com.ezmanagement.society.VisitorListBySocietyIdFilterQuery
 import com.ezmanagement.society.VisitorListBySocietyIdQuery
 import com.google.gson.Gson
 
@@ -20,6 +21,47 @@ class CheckInVisitorPresenter(
         societyid: String,
         jwttoken: String, offset: Int,limit:Int
     ) {
+//        view.showProgressbar()
+////        if (limit > arraylistsiez) {
+////            view.hideProgressbar()
+////        }
+//        var apiClient = ApiClient()
+//        lifecycleScope.launchWhenResumed {
+//            try {
+//
+//                val response =
+//                    apiClient!!.getApolloClient()
+//                        .query(VisitorListBySocietyIdQuery(limit, offset, societyid)).addHttpHeader(
+//                        "Authorization", "Bearer $jwttoken"
+//                    ).execute()
+//                Log.d("RESPONSE_ERROR", response.errors.toString())
+//                var visitorList: List<VisitorListBySocietyIdQuery.Society_visitors_checkin>? =
+//                    response.data?.society_visitors_checkin;
+//                val gson = Gson()
+//                if (!visitorList.isNullOrEmpty()) {
+//                    if (limit > visitorList.size) {
+//                        arraylistsiez=visitorList.size
+//                        view.hideProgressbar()
+//                    }
+//                    view.showItems(visitorList)
+//                } else {
+//                    view.showError("error")
+//                    view.hideProgressbar()
+//                }
+//
+//            } catch (e: Exception) {
+//                view.showError(e.message)
+//                view.hideProgressbar()
+//            }
+//
+////            return response?.data?.society_id
+//        }
+    }
+
+    override fun loadVisitorbyFilter(
+        societyid: String,
+        jwttoken: String, offset: Int,limit:Int,endDate:String,startDate:String
+    ) {
         view.showProgressbar()
 //        if (limit > arraylistsiez) {
 //            view.hideProgressbar()
@@ -30,11 +72,11 @@ class CheckInVisitorPresenter(
 
                 val response =
                     apiClient!!.getApolloClient()
-                        .query(VisitorListBySocietyIdQuery(limit, offset, societyid)).addHttpHeader(
-                        "Authorization", "Bearer $jwttoken"
-                    ).execute()
+                        .query(VisitorListBySocietyIdFilterQuery(endDate,limit, offset,startDate, societyid)).addHttpHeader(
+                            "Authorization", "Bearer $jwttoken"
+                        ).execute()
                 Log.d("RESPONSE_ERROR", response.errors.toString())
-                var visitorList: List<VisitorListBySocietyIdQuery.Society_visitors_checkin>? =
+                var visitorList: List<VisitorListBySocietyIdFilterQuery.Society_visitors_checkin>? =
                     response.data?.society_visitors_checkin;
                 val gson = Gson()
                 if (!visitorList.isNullOrEmpty()) {
@@ -76,13 +118,13 @@ class CheckInVisitorPresenter(
                         UpdateCheckVisitorMutation(
                             societyid,
                             checkinVisitorId,
-                            attendedTime,
-                            checkOutTime
+                            checkOutTime,
+                            attendedTime
                         )
                     ).addHttpHeader(
                         "Authorization", "Bearer $jwttoken"
                     ).execute()
-                Log.d("RESPONSE_ERROR", response.errors.toString())
+
                 var data: UpdateCheckVisitorMutation.Data? = response.data;
                 val gson = Gson()
                 val result = gson.toJson(data)
@@ -101,7 +143,50 @@ class CheckInVisitorPresenter(
             }
 //            return response?.data?.society_id
         }
+
     }
+
+//    override fun loadSearchVisitorItems(
+//        societyid: String,
+//        jwttoken: String, offset: Int,limit:Int
+//    ) {
+//        view.showProgressbar()
+////        if (limit > arraylistsiez) {
+////            view.hideProgressbar()
+////        }
+//        var apiClient = ApiClient()
+//        lifecycleScope.launchWhenResumed {
+//            try {
+//
+//                val response =
+//                    apiClient!!.getApolloClient()
+//                        .query(VisitorListBySocietyIdQuery(limit, offset, societyid)).addHttpHeader(
+//                            "Authorization", "Bearer $jwttoken"
+//                        ).execute()
+//                Log.d("RESPONSE_ERROR", response.errors.toString())
+//                var visitorList: List<VisitorListBySocietyIdQuery.Society_visitors_checkin>? =
+//                    response.data?.society_visitors_checkin;
+//                val gson = Gson()
+//                if (!visitorList.isNullOrEmpty()) {
+//                    if (limit > visitorList.size) {
+//                        arraylistsiez=visitorList.size
+//                        view.hideProgressbar()
+//                    }
+//                    view.showItems(visitorList)
+//                } else {
+//                    view.showError("error")
+//                    view.hideProgressbar()
+//                }
+//
+//            } catch (e: Exception) {
+//                view.showError(e.message)
+//                view.hideProgressbar()
+//            }
+//
+////            return response?.data?.society_id
+//        }
+//    }
+
 }
 
 
