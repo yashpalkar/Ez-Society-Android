@@ -6,7 +6,7 @@ plugins {
 
 android {
     signingConfigs {
-        debug {
+        uat {
             storeFile file('C:\\Users\\yashp\\AndroidStudioProjects\\Society\\app\\src\\ezSociety.jks')
             storePassword 'Tech1mini'
             keyAlias 'key0'

@@ -84,8 +84,9 @@ class CheckInVisitorPresenter(
                         arraylistsiez=visitorList.size
                         view.hideProgressbar()
                     }
-                    view.showItems(visitorList)
+                    view.notifyAdapter(visitorList)
                 } else {
+                    view.emptyVisitor()
                     view.showError("error")
                     view.hideProgressbar()
                 }

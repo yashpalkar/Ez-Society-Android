@@ -6,8 +6,8 @@ import java.time.LocalDateTime
 
 interface CheckedInVisitorContract {
     interface View {
-        fun showItems(checkinVisitorList:List<VisitorListBySocietyIdFilterQuery.Society_visitors_checkin>?)
-
+        fun notifyAdapter(checkinVisitorList:List<VisitorListBySocietyIdFilterQuery.Society_visitors_checkin>?)
+        fun emptyVisitor();
         fun showError(message: String?)
         fun updateVisitorList()
         fun hideProgressbar()

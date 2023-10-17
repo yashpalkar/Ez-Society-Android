@@ -59,10 +59,10 @@ class CheckedInVisitorAdapter(
                         0, 3
                     ) + " . " + check_inDateTime.hour + ":" + check_inDateTime.minute
             if (visitor.check_out != null) {
-                val checkout = visitor.check_in.toString().substring(0, 19)
+                val checkout = visitor.check_out.toString().substring(0, 19)
                 val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")
                 val checkoutDateTime =
-                    LocalDateTime.parse(check_in, formatter).plusHours(5).plusMinutes(30)
+                    LocalDateTime.parse(checkout, formatter).plusHours(5).plusMinutes(30)
 
                 binding.checkoutLayout.visibility = View.GONE
                 binding.checkoutTimeTitle.visibility = View.VISIBLE

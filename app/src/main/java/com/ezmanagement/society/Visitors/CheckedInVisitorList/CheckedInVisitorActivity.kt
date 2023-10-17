@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ezmanagement.society.AppConstants
 import com.ezmanagement.society.VisitorListBySocietyIdFilterQuery
-import com.ezmanagement.society.VisitorListBySocietyIdQuery
 import com.ezmanagement.society.databinding.ActivityCheckedInVisitorBinding
 import com.ezmanagement.society.sharedPreference.SharedPref
 import org.apache.commons.lang3.time.DurationFormatUtils
@@ -33,13 +32,16 @@ class CheckedInVisitorActivity : AppCompatActivity(), CheckedInVisitorContract.V
     var jwtToken: String? = null
     var page = 0
     val visitorList = ArrayList<VisitorListBySocietyIdFilterQuery.Society_visitors_checkin>()
-    var adapter:ArrayAdapter<String>?=null
+    var adapter: ArrayAdapter<String>? = null
     var nestedSV: NestedScrollView? = null
     var selectedItemPosition = -1
+
     @RequiresApi(Build.VERSION_CODES.O)
-    var endDate = LocalDate.now().atTime(23, 59, 59)
+    var endDate = LocalDate.now().atTime(23, 59, 59).plusHours(5).plusMinutes(30)
+
     @RequiresApi(Build.VERSION_CODES.O)
-    var startDate = LocalDate.now().atTime(LocalTime.MIDNIGHT)
+    var startDate = LocalDate.now().atTime(LocalTime.MIDNIGHT).minusHours(5).minusMinutes(30)
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,77 +77,95 @@ class CheckedInVisitorActivity : AppCompatActivity(), CheckedInVisitorContract.V
             "All Visitor's."
         )
 
-         adapter = ArrayAdapter(this, R.layout.simple_dropdown_item_1line, items)
+        adapter = ArrayAdapter(this, R.layout.simple_dropdown_item_1line, items)
 
         binding.filterTextView.setAdapter(adapter)
         if (items.isNotEmpty()) {
-           presenter!!.loadVisitorbyFilter(
-            societyId!!,
-            jwtToken!!,
-            0,
-            7,
-               LocalDate.now().atTime(23, 59, 59).toString(),
-               LocalDate.now().atTime(LocalTime.MIDNIGHT).toString(),
+            presenter!!.loadVisitorbyFilter(
+                societyId!!,
+                jwtToken!!,
+                0,
+                7,
+               endDate.toString(),
+                startDate.toString(),
             )
-            selectedItemPosition=0
+            selectedItemPosition = 0
             binding.filterTextView.setText(items[0], false)
         }
         binding.filterTextView.onItemClickListener =
             AdapterView.OnItemClickListener { _, _, position, _ ->
                 visitorList.clear()
                 binding.visitorFilterTtitle.setText(items[position])
-                selectedItemPosition=position
-                         when (position) {
-                    0 -> presenter!!.loadVisitorbyFilter(
-                        societyId!!,
-                        jwtToken!!,
-                        0,
-                        7,
-                        endDate.toString(),
-                        startDate.toString(),
-                    )
+                selectedItemPosition = position
+                when (position) {
+                    0 -> {
+                        presenter!!.loadVisitorbyFilter(
+                            societyId!!,
+                            jwtToken!!,
+                            0,
+                            7,
+                            endDate.toString(),
+                            startDate.toString(),
+                        )
+                        visitorList.clear()
+                    }
 
-                    1 -> presenter!!.loadVisitorbyFilter(
-                        societyId!!,
-                        jwtToken!!,
-                        0,
-                        7,
-                        endDate.minusDays(1).toString(),
-                        startDate.minusDays(1).toString(),
-                    )
+                    1 -> {
+                        presenter!!.loadVisitorbyFilter(
+                            societyId!!,
+                            jwtToken!!,
+                            0,
+                            7,
+                            endDate.minusDays(1).toString(),
+                            startDate.minusDays(1).toString(),
+                        )
+                        visitorList.clear()
+                    }
 
-                    2 -> presenter!!.loadVisitorbyFilter(
-                        societyId!!,
-                        jwtToken!!,
-                        0,
-                        7,
-                        endDate.toString(),
-                        startDate.minusDays(7).toString(),
-                    )
-                    3 -> presenter!!.loadVisitorbyFilter(
-                        societyId!!,
-                        jwtToken!!,
-                        0,
-                        7,
-                        endDate.toString(),
-                        startDate.minusMonths(1).toString(),
-                    )
-                    4 -> presenter!!.loadVisitorbyFilter(
-                        societyId!!,
-                        jwtToken!!,
-                        0,
-                        7,
-                        endDate.toString(),
-                        startDate.minusYears(1).toString(),
-                    )
-                    5 -> presenter!!.loadVisitorbyFilter(
-                        societyId!!,
-                        jwtToken!!,
-                        0,
-                        7,
-                        endDate.toString(),
-                        startDate.minusYears(10).toString(),
-                    )
+                    2 -> {
+                        presenter!!.loadVisitorbyFilter(
+                            societyId!!,
+                            jwtToken!!,
+                            0,
+                            7,
+                            endDate.toString(),
+                            startDate.minusDays(7).toString(),
+                        )
+                        visitorList.clear()
+                    }
+                    3 -> {
+                        presenter!!.loadVisitorbyFilter(
+                            societyId!!,
+                            jwtToken!!,
+                            0,
+                            7,
+                            endDate.toString(),
+                            startDate.minusMonths(1).toString(),
+                        )
+                        visitorList.clear()
+                    }
+                    4 -> {
+                        presenter!!.loadVisitorbyFilter(
+                            societyId!!,
+                            jwtToken!!,
+                            0,
+                            7,
+                            endDate.toString(),
+                            startDate.minusYears(1).toString(),
+                        )
+                        visitorList.clear()
+                    }
+                    5 -> {
+                        presenter!!.loadVisitorbyFilter(
+                            societyId!!,
+                            jwtToken!!,
+                            0,
+                            7,
+                            endDate.toString(),
+                            startDate.minusYears(10).toString(),
+                        )
+                        visitorList.clear()
+                    }
                     else -> "Invalid day" //
                 }// This is like
 
@@ -169,7 +189,7 @@ class CheckedInVisitorActivity : AppCompatActivity(), CheckedInVisitorContract.V
                     0 -> presenter!!.loadVisitorbyFilter(
                         societyId!!,
                         jwtToken!!,
-                        page*7,
+                        page * 7,
                         7,
                         endDate.toString(),
                         startDate.toString(),
@@ -178,7 +198,7 @@ class CheckedInVisitorActivity : AppCompatActivity(), CheckedInVisitorContract.V
                     1 -> presenter!!.loadVisitorbyFilter(
                         societyId!!,
                         jwtToken!!,
-                        page*7,
+                        page * 7,
                         7,
                         endDate.minusDays(1).toString(),
                         startDate.minusDays(1).toString(),
@@ -187,7 +207,7 @@ class CheckedInVisitorActivity : AppCompatActivity(), CheckedInVisitorContract.V
                     2 -> presenter!!.loadVisitorbyFilter(
                         societyId!!,
                         jwtToken!!,
-                        page*7,
+                        page * 7,
                         7,
                         endDate.toString(),
                         startDate.minusDays(7).toString(),
@@ -195,7 +215,7 @@ class CheckedInVisitorActivity : AppCompatActivity(), CheckedInVisitorContract.V
                     3 -> presenter!!.loadVisitorbyFilter(
                         societyId!!,
                         jwtToken!!,
-                        page*7,
+                        page * 7,
                         7,
                         endDate.toString(),
                         startDate.minusMonths(1).toString(),
@@ -203,7 +223,7 @@ class CheckedInVisitorActivity : AppCompatActivity(), CheckedInVisitorContract.V
                     4 -> presenter!!.loadVisitorbyFilter(
                         societyId!!,
                         jwtToken!!,
-                        page*7,
+                        page * 7,
                         7,
                         endDate.toString(),
                         startDate.minusYears(1).toString(),
@@ -211,7 +231,7 @@ class CheckedInVisitorActivity : AppCompatActivity(), CheckedInVisitorContract.V
                     5 -> presenter!!.loadVisitorbyFilter(
                         societyId!!,
                         jwtToken!!,
-                        page*7,
+                        page * 7,
                         7,
                         endDate.toString(),
                         startDate.minusYears(10).toString(),
@@ -225,9 +245,17 @@ class CheckedInVisitorActivity : AppCompatActivity(), CheckedInVisitorContract.V
     }
 
 
-    override fun showItems(checkinVisitorList: List<VisitorListBySocietyIdFilterQuery.Society_visitors_checkin>?) {
+    override fun notifyAdapter(checkinVisitorList: List<VisitorListBySocietyIdFilterQuery.Society_visitors_checkin>?) {
         if (checkinVisitorList != null) {
             visitorList.addAll(checkinVisitorList)
+            checkedInVisitorAdapter.setItems(visitorList)
+        }
+    }
+
+    override fun emptyVisitor() {
+        var checkinVisitorList: List<VisitorListBySocietyIdFilterQuery.Society_visitors_checkin>?=listOf()
+        if (checkinVisitorList != null) {
+//            visitorList.addAll(checkinVisitorList)
             checkedInVisitorAdapter.setItems(visitorList)
         }
     }
@@ -310,11 +338,12 @@ class CheckedInVisitorActivity : AppCompatActivity(), CheckedInVisitorContract.V
     override fun onClickcheckOut(data: VisitorListBySocietyIdFilterQuery.Society_visitors_checkin) {
 
         val checkInFormat = DateTimeFormatter.ISO_OFFSET_DATE_TIME
-
-        val checkInTime: LocalTime = LocalTime.parse(data.check_in.toString(), checkInFormat)
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
+        val check_inDateTime =
+            LocalDateTime.parse(data.check_in.toString(), formatter).plusHours(5).plusMinutes(30)
         val currentLocalTime = LocalTime.now()
         val currentUtcTime = Instant.now()
-        val duration = Duration.between(currentLocalTime,checkInTime)
+        val duration = Duration.between(currentLocalTime, check_inDateTime).abs()
 //var isO8601String=
 //        val hours = duration.toHours()
 //        val minutes = (duration.toMinutes() % 60)
@@ -355,6 +384,6 @@ class CheckedInVisitorActivity : AppCompatActivity(), CheckedInVisitorContract.V
         return DurationFormatUtils.formatDurationISO(millis)
     }
 
-    fun loadedataonFilter(){}
+    fun loadedataonFilter() {}
 
 }
